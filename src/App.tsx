@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { VK } from 'vk-openapi'
 import { Routes, Route} from 'react-router-dom'
+import { Provider } from 'react-redux'
 import Groups from './components/Groups';
+import { store } from './store/store'
 
 function App() {
+
   return (
     <>
-    <Routes>
-      <Route path='/callback-vk' element={<Groups />} />
-    </Routes>
+    <Provider store = { store }>
+      <Routes>
+        <Route path='/callback-vk' element={<Groups />} />
+      </Routes>
+    </Provider>
     </>
   );
 }
