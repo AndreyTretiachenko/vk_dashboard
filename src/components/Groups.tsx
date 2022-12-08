@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { getLogin } from '../features/loginSlice';
+import { getStats } from '../features/statSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/hookStore';
 import { VKget, VKgetStatus } from '../hooks/VKget';
 
@@ -9,6 +10,10 @@ function Groups() {
 
   const handlerOAuthVK = () => {
     dispatch(getLogin())
+  }
+
+  const handlerGetStatGroup = () => {
+    dispatch(getStats())
   }
   
   useEffect(() => {
@@ -24,6 +29,9 @@ function Groups() {
       <button
         onClick={handlerOAuthVK}
       >Войти</button>
+            <button
+        onClick={handlerGetStatGroup}
+      >Загрузить статистику</button>
     </div>
   )
 }

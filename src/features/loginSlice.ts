@@ -6,20 +6,19 @@ export const getLogin = createAsyncThunk(
     'vk/getLogin',
     async (data,  thunkApi) => {
         try {
-            
             return new Promise ((resolve, reject) => {
                   // @ts-ignore
-                  VK.Auth.getLoginStatus((res) => {
+                  VK.Auth.login((res) => {
                     resolve(res)
                   }, 1048576
                 )})
-            
         } catch (error:any)
         {
             return thunkApi.rejectWithValue(error.message)
         }
     }
 )
+
 
 interface Ilogin {
     data:Tlogin,
