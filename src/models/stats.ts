@@ -1,5 +1,3 @@
-
-
     export interface Activity {
         comments: number;
         copies: number;
