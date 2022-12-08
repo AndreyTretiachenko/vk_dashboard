@@ -1,15 +1,18 @@
-import {VK} from 'vk-openapi'
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, ActionCreatorWithPayload, PayloadAction } from '@reduxjs/toolkit'
+import { Tlogin } from '../models/login'
+
 
 export const getLogin = createAsyncThunk(
     'vk/getLogin',
     async (data,  thunkApi) => {
         try {
-            return await new Promise ((resolve, reject)=> {
-                VK.Auth.Login((res:any) => {
-                    return resolve(res)
-                })
-            })
+            
+            return new Promise ((resolve, reject) => {
+                  // @ts-ignore
+                  VK.Auth.getLoginStatus((res) => {
+                    resolve(res)
+                  }, 1048576
+                )})
             
         } catch (error:any)
         {
@@ -19,13 +22,13 @@ export const getLogin = createAsyncThunk(
 )
 
 interface Ilogin {
-    data:{},
+    data:Tlogin,
     error:string
     isLoading: boolean
 }
 
 const initialState:Ilogin  = {
-    data:{},
+    data:{} as Tlogin,
     error:'',
     isLoading: false
 }
@@ -39,9 +42,13 @@ export const loginSlice = createSlice({
         .addCase(getLogin.pending, (state, action) => {
             state.isLoading = true
         })
-        .addCase(getLogin.fulfilled, (state, action) => {
+        .addCase(getLogin.fulfilled, (state:Ilogin, action:PayloadAction<any>) => {
             state.isLoading = false
-            state.data = action.payload
+            state.data = action.payload.session
+        })
+        .addCase(getLogin.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = 'error'
         })
     },
 })

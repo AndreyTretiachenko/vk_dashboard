@@ -6,10 +6,12 @@ import { VKget, VKgetStatus } from '../hooks/VKget';
 function Groups() {
 
   const dispatch = useAppDispatch()
+
+  const handlerOAuthVK = () => {
+    dispatch(getLogin())
+  }
   
   useEffect(() => {
-    dispatch(getLogin)
-    console.log(data)
     console.log(
       VKget().then((res) => res)
     )
@@ -19,7 +21,9 @@ function Groups() {
 
   return (
     <div>
-      <span></span>
+      <button
+        onClick={handlerOAuthVK}
+      >Войти</button>
     </div>
   )
 }
