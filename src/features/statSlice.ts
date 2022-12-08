@@ -10,11 +10,11 @@ export const getStats = createAsyncThunk(
                   // @ts-ignore
                   VK.Api.call('stats.get', {
                     group_id: 173281049,
-                    timestamp_from: 1670335273,
+                    timestamp_from: 1669903273,
                     interval:'day',
                     v:'5.86'
                   }, (res) => {
-                    resolve(res)
+                    resolve(res.response)
                   }
                 )})
             

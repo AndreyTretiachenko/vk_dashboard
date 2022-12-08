@@ -16,23 +16,31 @@ function Groups() {
     dispatch(getStats())
   }
   
-  useEffect(() => {
-    console.log(
-      VKget().then((res) => res)
-    )
-  },[dispatch])
-
   const {data, error, isLoading} = useAppSelector((state) => state.login)
+  const response = useAppSelector((state) => state.stats.response)
 
   return (
-    <div>
-      <button
-        onClick={handlerOAuthVK}
-      >Войти</button>
-            <button
-        onClick={handlerGetStatGroup}
-      >Загрузить статистику</button>
-    </div>
+    <>
+      <div>
+        <button
+          onClick={handlerOAuthVK}
+        >
+          Войти
+        </button>
+        <button
+          onClick={handlerGetStatGroup}
+        >
+          Загрузить статистику
+        </button>
+      </div>
+      <div>
+        <ul>
+          {response.map((item) => (
+           <li key={item.period_from}>{`Дата: ${ new Date(item.period_from * 1000)} Комментариев:${item.activity.likes}`}</li>
+          ))}
+        </ul>
+      </div>
+    </>
   )
 }
 
