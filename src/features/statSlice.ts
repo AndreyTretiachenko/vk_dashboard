@@ -4,21 +4,18 @@ import { TstatsGroup } from '../models/stats'
 
 export const getStats = createAsyncThunk(
     'vk/getStats',
-    async (id:Number,  thunkApi) => {
+    async (settings:{id:Number, offset:Number}, thunkApi) => {
         try {
             return await new Promise ((resolve, reject) => {
                   // @ts-ignore
                   VK.Api.call('wall.get', {
-                    owner_id: id,
-                    extended:1,
-                    // timestamp_from: 1664582400,
-                    // interval:'day',
+                    owner_id: settings.id,
+                    offset: settings.offset,
                     v:'5.68'
                   }, (res) => {
                     resolve(res.response)
                   }
                 )})
-            
         } catch (error:any)
         {
             return thunkApi.rejectWithValue(error.message)

@@ -13,7 +13,7 @@ function Groups() {
   }
 
   const handlerGetStatGroup = () => {
-    dispatch(getStats(-196618209))
+    dispatch(getStats({id:-196618209, offset:0}))
   }
   
   const {data, error, isLoading} = useAppSelector((state) => state.login)
