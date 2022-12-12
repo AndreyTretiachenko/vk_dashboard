@@ -11,9 +11,10 @@ export const getStats = createAsyncThunk(
                   VK.Api.call('wall.get', {
                     owner_id: settings.id,
                     offset: settings.offset,
-                    v:'5.68'
+                    count:100,
+                    v:'5.86'
                   }, (res) => {
-                    resolve(res.response)
+                    resolve(res.response.items)
                   }
                 )})
         } catch (error:any)
@@ -25,7 +26,8 @@ export const getStats = createAsyncThunk(
 
 
 const initialState:TstatsGroup  = {
- response:[],
+ count:0,
+ items:[],
  error:'',
  isLoading: false
 }
@@ -41,7 +43,7 @@ export const statSlice = createSlice({
         })
         .addCase(getStats.fulfilled, (state, action:PayloadAction<any>) => {
           state.isLoading = false
-          state.response = action.payload
+          state.items = action.payload
         })
         .addCase(getStats.rejected, (state, action) => {
           state.error = 'error get statsGroup'  

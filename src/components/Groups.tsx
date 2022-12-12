@@ -62,34 +62,32 @@ function Groups() {
       </div>
       { !response.isLoading ? 
       <div style={{display:'inline-block', width: '100%'}}>
-          {response.response.map((item) => (
+          {response.items.map((item) => (
             <div className="card m-2" style={{display:'inline-block', width: '18rem'}}>
             <div className="card-body">
-              <h5 className="card-title">Статистика за {new Intl.DateTimeFormat("ru").format(item.period_from*1000)}</h5>
-              <h6 className="card-subtitle mb-2 text-muted">просмотры {item.visitors.views}, посетители {item.visitors.visitors}</h6>
+              <h5 className="card-title">Пост {item.post_type} за {new Intl.DateTimeFormat("ru").format(item.date*1000)}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">просмотры {item.views.count}</h6>
+              
               <p className="card-text">
+                {item.text.substring(0,40)}....
                 <ul>
                   <li>
                     <span>Позитивные</span>
                     <ul>
-                      <li>Охват: {item.reach.reach ?? 'нет'}</li>
-                      <li>Подписчики: {item.activity.subscribed  ?? 'нет'}</li>
-                      <li>Лайки: {item.activity.likes  ?? 'нет'}</li>
-                      <li>Комментарии: {item.activity.comments  ?? 'нет'}</li>
-                      <li>Репосты: {item.activity.copies  ?? 'нет'}</li>
+                      <li>Лайки: {item.likes.count ?? 'нет'}</li>
+                      <li>Комментарии: {item.comments.count  ?? 'нет'}</li>
+                      <li>Репосты: {item.reposts.count  ?? 'нет'}</li>
                     </ul>
                   </li>
                   <li>
                     <span>Негативные</span>
                     <ul>
-                      <li>Отписка: {item.activity.unsubscribed  ?? 'нет'}</li>
-                      <li>Скрытия из ленты: {item.activity.hidden  ?? 'нет'}</li>
+
                     </ul>
                   </li>
                 </ul>
               </p>
-              <a href="#" className="card-link">Card link</a>
-              <a href="#" className="card-link">Another link</a>
+
             </div>
           </div>
           
@@ -98,10 +96,10 @@ function Groups() {
         <AreaChart
           width={800}
           height={500}
-          data={response.response.map((item) => {
+          data={response.items.map((item) => {
             return {
-              дата: new Intl.DateTimeFormat('ru').format(item.period_from*1000),
-              охват: item.activity.likes?? 0
+              дата: new Intl.DateTimeFormat('ru').format(item.date*1000),
+              охват: item.likes.count ?? 0
             }
           }
 

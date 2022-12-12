@@ -1,102 +1,109 @@
-    export interface Activity {
+    export interface Size {
+        height: number;
+        type: string;
+        width: number;
+        url: string;
+    }
+    
+    
+    export interface Photo {
+        album_id: number;
+        date: number;
+        id: number;
+        owner_id: number;
+        access_key: string;
+        sizes: Size[];
+        text: string;
+        user_id: number;
+    }
+    
+    
+    export interface Video {
+        access_key: string;
+        can_comment: number;
+        can_edit: number;
+        can_like: number;
+        can_repost: number;
+        can_subscribe: number;
+        can_add_to_faves: number;
+        can_add: number;
+        can_attach_link: number;
         comments: number;
-        copies: number;
-        hidden: number;
-        likes: number;
-        subscribed: number;
-        unsubscribed: number;
-    }
-
-    export interface Age {
-        value: string;
-        count: number;
-    }
-
-    export interface City {
-        count: number;
-        name: string;
-        value: number;
-    }
-
-    export interface Country {
-        code: string;
-        count: number;
-        name: string;
-        value: number;
-    }
-
-    export interface Sex {
-        value: string;
-        count: number;
-    }
-
-    export interface SexAge {
-        value: string;
-        count: number;
-    }
-
-    export interface Reach {
-        age: Age[];
-        cities: City[];
-        countries: Country[];
-        mobile_reach: number;
-        reach: number;
-        reach_subscribers: number;
-        sex: Sex[];
-        sex_age: SexAge[];
-    }
-
-    export interface Age2 {
-        value: string;
-        count: number;
-    }
-
-    export interface City2 {
-        count: number;
-        name: string;
-        value: number;
-    }
-
-    export interface Country2 {
-        code: string;
-        count: number;
-        name: string;
-        value: number;
-    }
-
-    export interface Sex2 {
-        value: string;
-        count: number;
-    }
-
-    export interface SexAge2 {
-        value: string;
-        count: number;
-    }
-
-    export interface Visitors {
-        age: Age2[];
-        cities: City2[];
-        countries: Country2[];
-        mobile_views: number;
-        sex: Sex2[];
-        sex_age: SexAge2[];
+        date: number;
+        description: string;
+        duration: number;
+        photo_130: string;
+        photo_320: string;
+        photo_800: string;
+        photo_1280: string;
+        first_frame_130: string;
+        first_frame_160: string;
+        first_frame_320: string;
+        first_frame_800: string;
+        first_frame_1280: string;
+        width: number;
+        height: number;
+        id: number;
+        owner_id: number;
+        title: string;
+        track_code: string;
         views: number;
-        visitors: number;
     }
 
-    export interface Response {
-        activity: Activity;
-        period_from: number;
-        period_to: number;
-        reach: Reach;
-        visitors: Visitors;
+    export interface Attachment {
+        type: string;
+        photo: Photo;
+        video: Video;
+    }
+
+    export interface Comments {
+        count: number;
+    }
+
+    export interface Likes {
+        can_like: number;
+        count: number;
+        user_likes: number;
+    }
+
+    export interface Reposts {
+        count: number;
+        wall_count: number;
+        mail_count: number;
+    }
+
+    export interface Views {
+        count: number;
+    }
+
+    export interface Item {
+        id: number;
+        from_id: number;
+        owner_id: number;
+        date: number;
+        postponed_id: number;
+        marked_as_ads: number;
+        can_delete: number;
+        post_type: string;
+        text: string;
+        can_edit: number;
+        created_by: number;
+        can_pin: number;
+        is_pinned: number;
+        attachments: Attachment[];
+        comments: Comments;
+        likes: Likes;
+        reposts: Reposts;
+        views: Views;
+        hash: string;
     }
 
     export interface TstatsGroup {
-        response: Response[];
-        error: string,
-        isLoading: boolean
+        count: number;
+        items: Item[];
+        error:string;
+        isLoading:boolean;
     }
+
 
 
