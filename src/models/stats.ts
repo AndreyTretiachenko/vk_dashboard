@@ -98,12 +98,43 @@
         hash: string;
     }
 
+    export interface StatResult {
+        likes: number;
+        views: number;
+        comments: number;
+        reposts: number;
+    }
+
+    export interface Group {
+        id: number;
+        name: string;
+        screen_name: string;
+        is_closed: number;
+        type: string;
+        is_admin: number;
+        is_member: number;
+        is_advertiser: number;
+        photo_50: string;
+        photo_100: string;
+        photo_200: string;
+    }
+
     export interface TstatsGroup {
         count: number;
         items: Item[];
         error:string;
         isLoading:boolean;
+        result: StatResult;
+        groups:Group[];
+        
     }
+
+    export interface Tmembers {
+        count: number;
+        isLoading: boolean;
+        error: string;
+    }
+
 
 
 

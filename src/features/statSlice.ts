@@ -1,22 +1,48 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { TstatsGroup } from '../models/stats'
 
+const request = (settings) => { return new Promise ((resolve, reject) => {
+  // @ts-ignore
+  VK.Api.call('wall.get', {
+    extended:1,
+    owner_id: settings.id,
+    offset: settings.offset,
+    count:settings.count,
+    v:'5.86'
+  }, (res) => {
+    resolve(res.response)
+  }
+)})}
 
 export const getStats = createAsyncThunk(
     'vk/getStats',
-    async (settings:{id:Number, offset:Number}, thunkApi) => {
+    async (settings:{id:number, offset:number, count:number}, thunkApi) => {
         try {
-            return await new Promise ((resolve, reject) => {
-                  // @ts-ignore
-                  VK.Api.call('wall.get', {
-                    owner_id: settings.id,
-                    offset: settings.offset,
-                    count:100,
-                    v:'5.86'
-                  }, (res) => {
-                    resolve(res.response.items)
-                  }
-                )})
+          let statsAll = {
+            count:0,
+            items:[],
+            groups:[],
+           }
+          const offset = await request(settings).then((res:any) => {
+            return {
+              countOffset:Math.trunc(res.count/100),
+              other:res.count%100
+            }
+          })
+          
+          console.log(offset)
+          for (let i=0; i <= offset.countOffset; i++) {
+            settings.offset=i*100
+            await request(settings).then((res:any) => {
+              statsAll = {...statsAll,
+                count: statsAll.count + res.count,
+                items: [...statsAll.items, ...res.items],
+                groups: statsAll.groups,
+              }
+            })
+
+          }
+            return statsAll
         } catch (error:any)
         {
             return thunkApi.rejectWithValue(error.message)
@@ -29,7 +55,14 @@ const initialState:TstatsGroup  = {
  count:0,
  items:[],
  error:'',
- isLoading: false
+ isLoading: false,
+ result:{
+  likes:0,
+  comments:0,
+  views:0,
+  reposts:0
+ },
+ groups:[],
 }
 
 export const statSlice = createSlice({
@@ -43,12 +76,35 @@ export const statSlice = createSlice({
         })
         .addCase(getStats.fulfilled, (state, action:PayloadAction<any>) => {
           state.isLoading = false
-          state.items = action.payload
+          state.items = action.payload.items
+          state.count = action.payload.count
+          state.groups = action.payload.groups
+          let like = 0 
+          action.payload.items.map((item:any) => {
+            return like += item.likes.count 
+          })
+          state.result.likes = like
+          let views = 0 
+          action.payload.items.map((item:any) => {
+            return views += item.views.count 
+          })
+          state.result.views = views
+          let comments = 0 
+          action.payload.items.map((item:any) => {
+            return comments += item.comments.count 
+          })
+          state.result.comments = comments
+          let reposts = 0 
+          action.payload.items.map((item:any) => {
+            return reposts += item.reposts.count 
+          })
+          state.result.reposts = reposts
         })
         .addCase(getStats.rejected, (state, action) => {
           state.error = 'error get statsGroup'  
         })
-    },
+   
+    }
 })
 
 export const {} = statSlice.actions
