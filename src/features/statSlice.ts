@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { TstatsGroup } from '../models/stats'
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const request = (settings) => { return new Promise ((resolve, reject) => {
   // @ts-ignore
   VK.Api.call('wall.get', {
@@ -23,25 +27,31 @@ export const getStats = createAsyncThunk(
             items:[],
             groups:[],
            }
-          const offset = await request(settings).then((res:any) => {
+          const settingsReq = await request(settings).then((res:any) => {
             return {
               countOffset:Math.trunc(res.count/100),
-              other:res.count%100
+              other:res.count%100,
+              groups:res.groups
             }
           })
           
-          console.log(offset)
-          for (let i=0; i <= offset.countOffset; i++) {
+          console.log(settingsReq)
+          statsAll = {...statsAll,
+            groups: settingsReq.groups
+            }
+          for (let i=0; i < 1; i++) {
             settings.offset=i*100
-            await request(settings).then((res:any) => {
+           
+              await request(settings).then((res:any) => {
               statsAll = {...statsAll,
                 count: statsAll.count + res.count,
-                items: [...statsAll.items, ...res.items],
-                groups: statsAll.groups,
+                items: [...statsAll.items, ...res.items]
+                
               }
-            })
+            }).then(() => sleep(1000))
 
           }
+            console.log(statsAll)
             return statsAll
         } catch (error:any)
         {
@@ -86,7 +96,8 @@ export const statSlice = createSlice({
           state.result.likes = like
           let views = 0 
           action.payload.items.map((item:any) => {
-            return views += item.views.count 
+            if (item.views)
+              return views += item.views.count 
           })
           state.result.views = views
           let comments = 0 

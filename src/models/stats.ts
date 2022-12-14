@@ -136,5 +136,11 @@
     }
 
 
+    export interface TselectInputGroup {
+        id: number;
+        name?:string;
+    }
+
+
 
 
