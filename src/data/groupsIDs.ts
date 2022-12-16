@@ -322,7 +322,7 @@ export const groupIDs = [
         },
         {
             "id": 206979605,
-            "name": "Аскона Муром | ТЦ Витязь",
+            "name": "Askona Муром | ТЦ Витязь",
             "screen_name": "askona_v_murom",
             "is_closed": 0,
             "type": "page",
