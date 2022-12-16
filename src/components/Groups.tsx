@@ -16,7 +16,7 @@ function Groups() {
     dispatch(getLogin())
   }
   
-  const {data, error, isLoading} = useAppSelector((state) => state.login)
+  const {data} = useAppSelector((state) => state.login)
   const members = useAppSelector((state) => state.members)
   const response = useAppSelector((state) => state.stats)
   const [inputGroup, setinputGroup] = useState([])
@@ -33,7 +33,9 @@ function Groups() {
     }).catch((res) => {
       alert('авторизуйтесь пожалуйста')
     })
-    setinputGroup(groupIDs)
+    const res = groupIDs.sort(({name:a}, {name:b}) => a.localeCompare(b));
+    setinputGroup(res)
+    
   },[])
 
 
@@ -101,17 +103,51 @@ function Groups() {
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
               <div className="card-body">
                 <h5 className="card-title">ERpost</h5>
-                <h2 className="card-text">
+                <h2 className="card-text d-inline">
                   {((response.result.comments+response.result.likes+response.result.reposts)/members.count/response.items.length*100).toFixed(3) ?? '-'}%
                   </h2>
+                  <div className='d-inline-flex align-items-center'>
+                  {(response.result.comments+response.result.likes+response.result.reposts)/members.count/response.items.length*100 < 2 ? 
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="red"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                  </svg>
+                  </>  
+                  :
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="green"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                  <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                  </svg>
+                  </>
+                  } 
+                  </div>
               </div>
             </div>
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
               <div className="card-body">
                 <h5 className="card-title">ERview</h5>
-                <h2 className="card-text">
+                <h2 className="card-text d-inline">
                   {((response.result.comments+response.result.likes+response.result.reposts)/response.result.views*100).toFixed(2) ?? '-'}%
                   </h2>
+                  <div className='d-inline-flex align-items-center'>
+                  {(response.result.comments+response.result.likes+response.result.reposts)/response.result.views*100 < 1 ? 
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="red"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                  </svg>
+                  </>  
+                  :
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="green"
+                  
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                  <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>                  </svg>
+                  </>
+                  } 
+                  </div>
               </div>
             </div>
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
@@ -181,9 +217,23 @@ function Groups() {
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
               <div className="card-body">
                 <h5 className="card-title">CTR</h5>
-                <h2 className="card-text">
+                <h2 className="card-text d-inline">
                   {(response.result.views/members.count/response.items.length*100).toFixed(2) ?? '-'}%
                   </h2>
+                  {response.result.views/members.count/response.items.length*100 < 10 ? 
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="red"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                  </svg>
+                  </>  
+                  :
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="green"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                  <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>                  </svg>
+                  </>
+                  } 
               </div>
             </div>
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
@@ -196,11 +246,11 @@ function Groups() {
             </div>
    
           <ul>
-            <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков</li>
-            <li>ERview = (лайки+репосты+комментарии)/кол-во просмотров публикации</li>
+            <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков. Референс - от 2% хороший реультат</li>
+            <li>ERview = (лайки+репосты+комментарии)/кол-во просмотров публикации. Референс - от 1% хороший реультат</li>
             <li>Средний ERpost = (Сумма лайков за весь период + сумма репостов за весь период + сумма комментариев за весь период)/кол-во подписчиков/кол-во публикаций за весь период</li>
             <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков</li>
-            <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков</li>
+            <li>CTR = просмотры/кол-во подписчиков. Референс - от 10% хороший реультат</li>
 
           </ul>
 
