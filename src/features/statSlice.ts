@@ -51,7 +51,6 @@ export const getStats = createAsyncThunk(
             }).then(() => sleep(1000))
 
           }
-            console.log(statsAll)
             return statsAll
         } catch (error:any)
         {

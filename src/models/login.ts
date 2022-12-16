@@ -13,5 +13,6 @@ type Tuser = {
         "href": string,
         "first_name": string,
         "last_name": string,
-        "nickname": string
+        "nickname": string,
+        "photo":string,
 }
