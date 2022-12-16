@@ -41,7 +41,13 @@ function Groups() {
 
   const handlerGetStatGroup = () => {
     dispatch(getGroupInfo({id: Number(selectInputGroup.id), offset:0, count:100}))
-    dispatch(getStats({id:-selectInputGroup.id, offset:0, count:100}))
+    dispatch(getStats({
+      id:-selectInputGroup.id, 
+      offset:0, 
+      count:100,
+      dateEnd:selectInputGroup.dateEnd || '',
+      dateStart:selectInputGroup.dateStart || '',
+    }))
   }
 
   return (
@@ -87,6 +93,18 @@ function Groups() {
           <input
           type="checkbox" id="exampleCheck1" />
           <label className="form-check-label  ml-2" htmlFor="exampleCheck1">все группы</label>
+        </div>
+        <div className='d-inline'>
+          <label className='d-inline pl-4 mx-2'>период:</label>
+          <input className='form-control d-inline' style={{width:'20%'}} type='date' 
+          value={selectInputGroup.dateStart}
+          onChange={(e) => setSelectInputGroup({...selectInputGroup, dateStart:e.target.value})}
+          />
+          <span className='mx-3'>-</span>
+          <input className='form-control d-inline' style={{width:'20%'}} type='date' 
+          value={selectInputGroup.dateEnd}
+          onChange={(e) => setSelectInputGroup({...selectInputGroup, dateEnd:e.target.value})}
+          />
         </div>
         </div>
         }
@@ -161,9 +179,23 @@ function Groups() {
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
               <div className="card-body">
                 <h5 className="card-title">LR (Love Rate)</h5>
-                <h2 className="card-text">
+                <h2 className="card-text d-inline">
                   {(response.result.likes/members.count/response.items.length*100).toFixed(2) ?? '-'}%
                   </h2>
+                  {response.result.likes/members.count/response.items.length*100 < 1 ? 
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="red"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                  </svg>
+                  </>  
+                  :
+                  <>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" 
+                  fill="green"
+                  className="bi bi-caret-down d-inline" viewBox="0 0 16 16">
+                  <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>                  </svg>
+                  </>
+                  } 
               </div>
             </div>
             <div className="card d-inline-flex m-1" style={{width: "250px"}}>
@@ -248,6 +280,8 @@ function Groups() {
           <ul>
             <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков. Референс - от 2% хороший реультат</li>
             <li>ERview = (лайки+репосты+комментарии)/кол-во просмотров публикации. Референс - от 1% хороший реультат</li>
+            <li>LR(love rate) = лайки/кол-во просмотров публикации/кол-во подписчиков. Референс - от 1% хороший реультат</li>
+            <li>TR(talk rate) = комментарии/кол-во просмотров публикации/кол-во подписчиков.</li>
             <li>Средний ERpost = (Сумма лайков за весь период + сумма репостов за весь период + сумма комментариев за весь период)/кол-во подписчиков/кол-во публикаций за весь период</li>
             <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков</li>
             <li>CTR = просмотры/кол-во подписчиков. Референс - от 10% хороший реультат</li>

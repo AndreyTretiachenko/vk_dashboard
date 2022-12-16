@@ -20,7 +20,14 @@ const request = (settings) => { return new Promise ((resolve, reject) => {
 
 export const getStats = createAsyncThunk(
     'vk/getStats',
-    async (settings:{id:number, offset:number, count:number}, thunkApi) => {
+    async (settings:{
+      id:number, 
+      offset:number, 
+      count:number,
+      dateStart:string,
+      dateEnd:string,
+    
+    }, thunkApi) => {
         try {
           let statsAll = {
             count:0,
@@ -34,12 +41,12 @@ export const getStats = createAsyncThunk(
               groups:res.groups
             }
           })
-          
+
           console.log(settingsReq)
           statsAll = {...statsAll,
             groups: settingsReq.groups
             }
-          for (let i=0; i < 1; i++) {
+          for (let i=0; i <= settingsReq.countOffset; i++) {
             settings.offset=i*100
            
               await request(settings).then((res:any) => {
@@ -51,6 +58,14 @@ export const getStats = createAsyncThunk(
             }).then(() => sleep(1000))
 
           }
+            if (settings.dateEnd && settings.dateStart) {
+              const dateEnd = new Date(Number(settings.dateEnd.split('-')[0]), Number(settings.dateEnd.split('-')[1])-1, Number(settings.dateEnd.split('-')[2])).getTime()/1000
+              const dateStart = new Date(Number(settings.dateStart.split('-')[0]), Number(settings.dateStart.split('-')[1])-1, Number(settings.dateStart.split('-')[2])).getTime()/1000
+              const result = statsAll.items.filter((item:any) => {
+                return item.date <= dateEnd && item.date >= dateStart
+              })
+              statsAll.items = result
+            }
             console.log(statsAll)
             return statsAll
         } catch (error:any)

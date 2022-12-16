@@ -1,3 +1,5 @@
+import { NumberLiteralType } from "typescript";
+
     export interface Size {
         height: number;
         type: string;
@@ -137,8 +139,10 @@
 
 
     export interface TselectInputGroup {
-        id: number;
+        id?: number;
         name?:string;
+        dateStart?:string;
+        dateEnd?:string;
     }
 
 
