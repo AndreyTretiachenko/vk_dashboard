@@ -73,6 +73,7 @@ function Groups() {
         <div className="row">
           <div className="col-2 d-flex align-items-center">
             <img
+              alt=""
               src={data.photo}
               style={{ border: "1px solid", borderRadius: "100px" }}
             />
