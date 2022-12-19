@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { read } from "fs";
 import { TstatsGroup } from "../models/stats";
 
 function sleep(ms) {
