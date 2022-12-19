@@ -70,6 +70,7 @@ export const getStats = createAsyncThunk(
         settings.offset = i * 100;
         // eslint-disable-next-line no-loop-func
         await request(settings)
+          // eslint-disable-next-line no-loop-func
           .then((res: any) => {
             statsAll = {
               ...statsAll,
