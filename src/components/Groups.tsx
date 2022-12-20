@@ -32,6 +32,8 @@ function Groups() {
   const { data } = useAppSelector((state) => state.login);
   const members = useAppSelector((state) => state.members);
   const response = useAppSelector((state) => state.stats);
+  const [favourite, setFavourite] = useState(false);
+  const [favouriteList, setFavouriteList] = useState([]);
   const [inputGroup, setinputGroup] = useState([]);
   const [selectInputGroup, setSelectInputGroup] = useState({
     id: 173281049,
@@ -50,7 +52,32 @@ function Groups() {
       });
     const res = groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b));
     setinputGroup(res);
+    if (localStorage.getItem("favourite"))
+      setFavouriteList(JSON.parse(localStorage.getItem("favourite")));
+    else
+      localStorage.setItem(
+        "favourite",
+        JSON.stringify([
+          {
+            id: 173281049,
+            name: "Аскона Север / Территория здорового сна",
+          },
+        ])
+      );
+    setFavouriteList(JSON.parse(localStorage.getItem("favourite")));
   }, []);
+
+  useEffect(() => {
+    if (favourite) {
+      setinputGroup(favouriteList);
+    } else {
+      setinputGroup(
+        groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
+      );
+    }
+  }, [favourite]);
+
+  const handlerAddFavourite = (data: any) => {};
 
   const handlerGetStatGroup = () => {
     dispatch(
@@ -102,16 +129,22 @@ function Groups() {
                   onChange={(e) => {
                     setSelectInputGroup({
                       id: Number(e.target.value),
+                      name: e.target.options[
+                        e.target.selectedIndex
+                      ].getAttribute("data-name"),
                       dateEnd: "",
                       dateStart: "",
                     });
                   }}
                   className="form-control"
-                  id="basic-url"
                   aria-describedby="basic-addon3"
                 >
                   {inputGroup.map((item: TselectInputGroup) => (
-                    <option key={item.id} value={item.id}>
+                    <option
+                      key={item.id}
+                      value={item.id}
+                      data-name={item.name.toString()}
+                    >
                       {item.name.trim()}
                     </option>
                   ))}
@@ -119,18 +152,23 @@ function Groups() {
               </div>
 
               <button
-                className="d-inline btn btn-sm btn-primary m-2"
+                className="d-inline btn btn-sm btn-outline-primary m-2"
                 onClick={handlerGetStatGroup}
               >
                 Загрузить статистику
               </button>
               <div className="form-group d-inline form-check form-check-sm">
-                <input type="checkbox" id="exampleCheck1" />
+                <input
+                  type="checkbox"
+                  id="exampleCheck1"
+                  checked={favourite}
+                  onChange={(e) => setFavourite(e.target.checked)}
+                />
                 <label
                   className="form-check-label  ml-2"
                   htmlFor="exampleCheck1"
                 >
-                  все группы
+                  избранное
                 </label>
               </div>
               <div className="d-inline">
@@ -170,8 +208,26 @@ function Groups() {
           <div style={{ display: "inline-block", width: "100%" }}>
             <div className="card">
               <div className="card-header text-center">
-                Общая аналитика группы {response?.groups[0]?.name ?? " - "}
+                <div className="d-inline mr-3">
+                  Общая аналитика группы {response?.groups[0]?.name ?? " - "}
+                </div>
+                <div className="d-inline">
+                  <button className="btn btn-sm btn-outline-primary">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-star mr-2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                    </svg>
+                    добавить в избранное
+                  </button>
+                </div>
               </div>
+
               {response.items.length !== 0 ? (
                 <div className="card-body">
                   <h5 className="card-title">
