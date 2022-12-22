@@ -207,11 +207,14 @@ function Groups() {
         members.error === "" ? (
           <div style={{ display: "inline-block", width: "100%" }}>
             <div className="card">
-              <div className="card-header text-center">
-                <div className="d-inline mr-3">
+              <div className="card-header text-center d-flex align-items-center">
+                <div className="d-inline-flex mr-3 ">
                   Общая аналитика группы {response?.groups[0]?.name ?? " - "}
                 </div>
-                <div className="d-inline">
+                <div
+                  className=""
+                  style={{ position: "absolute", right: 0, marginRight: 10 }}
+                >
                   <button className="btn btn-sm btn-outline-primary">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
