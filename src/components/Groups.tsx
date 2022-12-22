@@ -85,6 +85,14 @@ function Groups() {
     );
   };
 
+  useEffect(() => {
+    if (favourite) setinputGroup(favouriteList);
+    else
+      setinputGroup(
+        groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
+      );
+  }, [favourite, favouriteList]);
+
   return (
     <>
       <div className="container">
@@ -205,13 +213,7 @@ function Groups() {
                 {response.count > 0 && (
                   <>
                     <FafouriteButton
-                      isFavourite={
-                        favouriteList.find(
-                          (item) => item.id === response.groups[0]?.id
-                        ).name === ""
-                          ? false
-                          : true
-                      }
+                      id={response.groups[0]?.id}
                       clickFavourite={handlerToggleFavourite}
                     />
                   </>
