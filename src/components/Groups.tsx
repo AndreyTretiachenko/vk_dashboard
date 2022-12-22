@@ -61,12 +61,17 @@ function Groups() {
 
   const handlerToggleFavourite = () => {
     const find = favouriteList.find(
-      (items) => items.id === selectInputGroup.id
+      (items) => items.id === response.groups[0]?.id
     )?.name;
     if (find === undefined) {
-      dispatch(addFavouriteItem({ ...selectInputGroup }));
+      dispatch(
+        addFavouriteItem({
+          id: response.groups[0]?.id,
+          name: response.groups[0]?.name,
+        })
+      );
     } else {
-      dispatch(updateFavouriteList(selectInputGroup.id));
+      dispatch(updateFavouriteList(response.groups[0]?.id));
     }
   };
 

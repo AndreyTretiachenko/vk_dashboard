@@ -15,7 +15,6 @@ export const favouriteSlice = createSlice({
       const result = state.items.filter(
         (item: any) => item.id !== action.payload
       );
-      console.log(result);
       return {
         ...state,
         items: result,
