@@ -2,7 +2,7 @@
   "name": "vk_dashboard",
   "version": "0.1.0",
   "private": true,
-  "options":{
+  "options": {
     "proxy": "https://api.vk.com"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.2.0",
     "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
     "typescript": "^4.9.3",
     "vk-openapi": "^0.1.2",
     "web-vitals": "^2.1.4"

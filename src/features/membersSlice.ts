@@ -42,6 +42,8 @@ export const memberSlice = createSlice({
       })
       .addCase(getGroupInfo.fulfilled, (state, action: PayloadAction<any>) => {
         state.count = action.payload.count;
+        state.isLoading = false;
+        state.error = "";
       })
       .addCase(getGroupInfo.rejected, (state, action) => {
         state.error = "error get members";

@@ -1,17 +1,43 @@
-import { configureStore } from '@reduxjs/toolkit'
-import loginSlice from '../features/loginSlice'
-import membersSlice from '../features/membersSlice'
-import statSlice from '../features/statSlice'
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import loginSlice from "../features/loginSlice";
+import membersSlice from "../features/membersSlice";
+import statSlice from "../features/statSlice";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
+import { combineReducers } from "@reduxjs/toolkit";
+import favouriteSlice from "../features/favouriteSlice";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "myroot",
+  storage: storage,
+};
+
+const reducers = combineReducers({
+  login: loginSlice,
+  stats: statSlice,
+  members: membersSlice,
+  favourite: favouriteSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-    reducer:{
-        login:loginSlice,
-        stats:statSlice,
-        members:membersSlice,
-    }
-})
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+});
 
+export type RootState = ReturnType<typeof store.getState>;
 
-export type RootState = ReturnType<typeof store.getState>
-
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;

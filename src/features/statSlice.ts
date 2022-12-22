@@ -126,6 +126,7 @@ export const statSlice = createSlice({
         state.items = action.payload.items;
         state.count = action.payload.count;
         state.groups = action.payload.groups;
+        state.error = "";
         let like = 0;
         action.payload.items.map((item: any) => {
           return (like += item.likes.count);

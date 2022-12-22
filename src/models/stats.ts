@@ -139,5 +139,5 @@ export interface TselectInputGroup {
   name?: string;
   dateStart?: string;
   dateEnd?: string;
-  isFafourite?: boolean;
+  isFavourite?: boolean;
 }

@@ -21,6 +21,11 @@ import {
 import { getGroupInfo } from "../features/membersSlice";
 import { TselectInputGroup } from "../models/stats";
 import { groupIDs } from "../data/groupsIDs";
+import FafouriteButton from "./FafouriteButton";
+import {
+  addFavouriteItem,
+  updateFavouriteList,
+} from "../features/favouriteSlice";
 
 function Groups() {
   const dispatch = useAppDispatch();
@@ -32,9 +37,11 @@ function Groups() {
   const { data } = useAppSelector((state) => state.login);
   const members = useAppSelector((state) => state.members);
   const response = useAppSelector((state) => state.stats);
+  const favouriteList = useAppSelector((state) => state.favourite.items);
   const [favourite, setFavourite] = useState(false);
-  const [favouriteList, setFavouriteList] = useState([]);
-  const [inputGroup, setinputGroup] = useState([]);
+  const [inputGroup, setinputGroup] = useState(
+    groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
+  );
   const [selectInputGroup, setSelectInputGroup] = useState({
     id: 173281049,
     name: "Аскона Север / Территория здорового сна",
@@ -50,34 +57,18 @@ function Groups() {
       .catch((res) => {
         alert("авторизуйтесь пожалуйста");
       });
-    const res = groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b));
-    setinputGroup(res);
-    if (localStorage.getItem("favourite"))
-      setFavouriteList(JSON.parse(localStorage.getItem("favourite")));
-    else
-      localStorage.setItem(
-        "favourite",
-        JSON.stringify([
-          {
-            id: 173281049,
-            name: "Аскона Север / Территория здорового сна",
-          },
-        ])
-      );
-    setFavouriteList(JSON.parse(localStorage.getItem("favourite")));
   }, []);
 
-  useEffect(() => {
-    if (favourite) {
-      setinputGroup(favouriteList);
+  const handlerToggleFavourite = () => {
+    const find = favouriteList.find(
+      (items) => items.id === selectInputGroup.id
+    )?.name;
+    if (find === undefined) {
+      dispatch(addFavouriteItem({ ...selectInputGroup }));
     } else {
-      setinputGroup(
-        groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
-      );
+      dispatch(updateFavouriteList(selectInputGroup.id));
     }
-  }, [favourite]);
-
-  const handlerAddFavourite = (data: any) => {};
+  };
 
   const handlerGetStatGroup = () => {
     dispatch(
@@ -211,24 +202,20 @@ function Groups() {
                 <div className="d-inline-flex mr-3 ">
                   Общая аналитика группы {response?.groups[0]?.name ?? " - "}
                 </div>
-                <div
-                  className=""
-                  style={{ position: "absolute", right: 0, marginRight: 10 }}
-                >
-                  <button className="btn btn-sm btn-outline-primary">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-star mr-2"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    добавить в избранное
-                  </button>
-                </div>
+                {response.count > 0 && (
+                  <>
+                    <FafouriteButton
+                      isFavourite={
+                        favouriteList.find(
+                          (item) => item.id === response.groups[0]?.id
+                        ).name === ""
+                          ? false
+                          : true
+                      }
+                      clickFavourite={handlerToggleFavourite}
+                    />
+                  </>
+                )}
               </div>
 
               {response.items.length !== 0 ? (
