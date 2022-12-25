@@ -90,7 +90,6 @@ export const getStats = createAsyncThunk(
         const result = statsAll.items.filter((item: any) => {
           return item.date <= dateEnd && item.date >= dateStart;
         });
-        console.log(result);
         statsAll.items = result;
       }
       return statsAll;
