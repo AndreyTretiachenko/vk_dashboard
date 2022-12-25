@@ -213,7 +213,10 @@ function Groups() {
             <div className="card">
               <div className="card-header text-center d-flex align-items-center">
                 <div className="d-inline-flex mr-3 ">
-                  Общая аналитика группы {response?.groups[0]?.name ?? " - "}
+                  Общая аналитика группы: &nbsp;
+                  <span style={{ fontWeight: 500 }}>
+                    {response?.groups[0]?.name ?? " - "}
+                  </span>
                 </div>
                 {response.count > 0 && (
                   <>

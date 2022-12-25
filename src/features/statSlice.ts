@@ -78,7 +78,8 @@ export const getStats = createAsyncThunk(
               items: [...statsAll.items, ...res.items],
             };
             if (settings.dateEnd && settings.dateStart)
-              if (res.items[99].date <= dateStart) exitFlag = true;
+              if (res.items[res.items.length - 1].date <= dateStart)
+                exitFlag = true;
             i++;
           })
           .then(() => {
@@ -89,6 +90,7 @@ export const getStats = createAsyncThunk(
         const result = statsAll.items.filter((item: any) => {
           return item.date <= dateEnd && item.date >= dateStart;
         });
+        console.log(result);
         statsAll.items = result;
       }
       return statsAll;
