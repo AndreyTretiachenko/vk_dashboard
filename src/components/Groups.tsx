@@ -49,7 +49,7 @@ function Groups() {
   } as TselectInputGroup);
 
   const handlerAddGroup = (select: TselectInputGroup) => {
-    setinputGroup((prev) => [...prev, select]);
+    setinputGroup((prev) => [select, ...prev]);
   };
 
   useEffect(() => {
@@ -221,6 +221,7 @@ function Groups() {
           )}
         </div>
         {!response.isLoading &&
+        response.items.length !== 0 &&
         response.error === "" &&
         members.error === "" ? (
           <div style={{ display: "inline-block", width: "100%" }}>
@@ -714,11 +715,18 @@ function Groups() {
               <div className="card-footer text-muted"></div>
             </div>
           </div>
-        ) : (
+        ) : response.items.length !== 0 ? (
           <div className="d-flex justify-content-center p-5">
             <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
+              <span className="sr-only">Загрузка...</span>
             </div>
+          </div>
+        ) : (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "300px" }}
+          >
+            Нет данных за выбранный период
           </div>
         )}
       </div>

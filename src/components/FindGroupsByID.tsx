@@ -89,12 +89,17 @@ export default function FindGroupsByID(props: propsFind) {
                     </option>
                   ))}
                 </select>
+                <div className="alert-info mt-2 p-2">
+                  Если хотите сохранить найденную группу - добавьте ее в
+                  избранное
+                </div>
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn-secondary btn-sm"
                   data-dismiss="modal"
+                  onClick={() => setQ("")}
                 >
                   Закрыть
                 </button>
