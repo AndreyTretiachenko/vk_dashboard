@@ -724,7 +724,7 @@ function Groups() {
         ) : (
           <div
             className="d-flex justify-content-center align-items-center"
-            style={{ height: "300px" }}
+            style={{ height: "250px" }}
           >
             Нет данных за выбранный период
           </div>
