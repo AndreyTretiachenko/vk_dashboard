@@ -23,7 +23,7 @@ export default function FindGroupsByID(props: propsFind) {
           data-toggle="modal"
           data-target="#AddGroupModal"
         >
-          Добавить
+          Добавить группу
         </button>
         <div
           className="modal fade"

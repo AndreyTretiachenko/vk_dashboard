@@ -173,7 +173,7 @@ function Groups() {
                 className="d-inline btn btn-sm btn-outline-primary m-2"
                 onClick={handlerGetStatGroup}
               >
-                Загрузить статистику
+                Загрузить аналитику
               </button>
               <div className="form-group d-inline form-check form-check-sm">
                 <input
