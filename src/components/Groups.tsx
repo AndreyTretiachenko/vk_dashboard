@@ -26,6 +26,8 @@ import {
   addFavouriteItem,
   updateFavouriteList,
 } from "../features/favouriteSlice";
+import FindGroupsByID from "./FindGroupsByID";
+import { findGroup } from "../features/findDroupByIdSlice";
 
 function Groups() {
   const dispatch = useAppDispatch();
@@ -38,14 +40,17 @@ function Groups() {
   const members = useAppSelector((state) => state.members);
   const response = useAppSelector((state) => state.stats);
   const favouriteList = useAppSelector((state) => state.favourite.items);
+  const findListGroup = useAppSelector((state) => state.search);
   const [favourite, setFavourite] = useState(false);
-  const [inputGroup, setinputGroup] = useState(
-    groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
-  );
+  const [inputGroup, setinputGroup] = useState<TselectInputGroup[]>([]);
   const [selectInputGroup, setSelectInputGroup] = useState({
     id: 173281049,
     name: "Аскона Север / Территория здорового сна",
   } as TselectInputGroup);
+
+  const handlerAddGroup = (select: TselectInputGroup) => {
+    setinputGroup((prev) => [...prev, select]);
+  };
 
   useEffect(() => {
     dispatch(getStatus())
@@ -58,6 +63,10 @@ function Groups() {
         alert("авторизуйтесь пожалуйста");
       });
   }, []);
+
+  const handlePressFind = (query: string) => {
+    dispatch(findGroup({ q: query, offset: 0, count: 20 }));
+  };
 
   const handlerToggleFavourite = () => {
     const find = favouriteList.find(
@@ -143,7 +152,7 @@ function Groups() {
                   className="form-control"
                   aria-describedby="basic-addon3"
                 >
-                  {inputGroup.map((item: TselectInputGroup) => (
+                  {inputGroup.map((item) => (
                     <option
                       key={item.id}
                       value={item.id}
@@ -153,6 +162,11 @@ function Groups() {
                     </option>
                   ))}
                 </select>
+                <FindGroupsByID
+                  pressFind={handlePressFind}
+                  listFind={findListGroup.search}
+                  addGroup={handlerAddGroup}
+                />
               </div>
 
               <button

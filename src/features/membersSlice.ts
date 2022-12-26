@@ -41,7 +41,7 @@ export const memberSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getGroupInfo.fulfilled, (state, action: PayloadAction<any>) => {
-        state.count = action.payload.count;
+        if (action.payload !== undefined) state.count = action.payload.count;
         state.isLoading = false;
         state.error = "";
       })

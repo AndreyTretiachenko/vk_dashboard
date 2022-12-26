@@ -18,7 +18,9 @@ const request = (settings) => {
         v: "5.86",
       },
       (res) => {
-        resolve(res.response);
+        console.log(res.error === undefined);
+        if (res.error === undefined) resolve(res.response);
+        else reject(res.error);
       }
     );
   });
@@ -84,6 +86,9 @@ export const getStats = createAsyncThunk(
           })
           .then(() => {
             sleep(1000);
+          })
+          .catch((error) => {
+            exitFlag = true;
           });
       }
       if (settings.dateEnd && settings.dateStart) {
@@ -125,12 +130,12 @@ export const statSlice = createSlice({
       .addCase(getStats.fulfilled, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.items = action.payload.items;
-        state.count = action.payload.count;
+        state.count = action.payload.count ?? action.payload.count;
         state.groups = action.payload.groups;
         state.error = "";
         let like = 0;
         action.payload.items.map((item: any) => {
-          return (like += item.likes.count);
+          if (item.likes.count !== undefined) return (like += item.likes.count);
         });
         state.result.likes = like;
         let views = 0;
@@ -140,17 +145,22 @@ export const statSlice = createSlice({
         state.result.views = views;
         let comments = 0;
         action.payload.items.map((item: any) => {
-          return (comments += item.comments.count);
+          if (item.comments.count !== undefined)
+            return (comments += item.comments.count);
         });
         state.result.comments = comments;
         let reposts = 0;
-        action.payload.items.map((item: any) => {
-          return (reposts += item.reposts.count);
-        });
-        state.result.reposts = reposts;
+        if (action.payload !== undefined) {
+          action.payload.items.map((item: any) => {
+            if (item.reposts.count !== undefined)
+              return (reposts += item.reposts.count);
+          });
+          state.result.reposts = reposts;
+        }
       })
       .addCase(getStats.rejected, (state, action) => {
         state.error = "error get statsGroup";
+        state.isLoading = false;
       });
   },
 });

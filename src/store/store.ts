@@ -14,6 +14,8 @@ import {
 import { combineReducers } from "@reduxjs/toolkit";
 import favouriteSlice from "../features/favouriteSlice";
 import storage from "redux-persist/lib/storage";
+import FindGroupsByID from "../components/FindGroupsByID";
+import findDroupByIdSlice from "../features/findDroupByIdSlice";
 
 const persistConfig = {
   key: "myroot",
@@ -25,6 +27,7 @@ const reducers = combineReducers({
   stats: statSlice,
   members: membersSlice,
   favourite: favouriteSlice,
+  search: findDroupByIdSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
