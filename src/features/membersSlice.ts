@@ -47,6 +47,7 @@ export const memberSlice = createSlice({
       })
       .addCase(getGroupInfo.rejected, (state, action) => {
         state.error = "error get members";
+        state.isLoading = false;
       });
   },
 });
