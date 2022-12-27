@@ -18,7 +18,6 @@ const request = (settings) => {
         v: "5.86",
       },
       (res) => {
-        console.log(res.error === undefined);
         if (res.error === undefined) resolve(res.response);
         else reject(res.error);
       }
