@@ -54,6 +54,11 @@ export interface Attachment {
   type: string;
   photo: Photo;
   video: Video;
+  market_album?: market;
+}
+
+export interface market {
+  photo: Photo;
 }
 
 export interface Comments {
@@ -117,6 +122,7 @@ export interface Group {
   photo_50: string;
   photo_100: string;
   photo_200: string;
+  members_count: number;
 }
 
 export interface TstatsGroup {

@@ -3,12 +3,14 @@ import { useAppSelector } from "../hooks/hookStore";
 
 function FafouriteButton({ id, clickFavourite }) {
   const favouriteList = useAppSelector((state) => state.favourite.items);
+  const errorStats = useAppSelector((state) => state.stats.error)
   return (
     <>
       <div style={{ position: "absolute", right: 0, marginRight: 10 }}>
         <button
           className="btn btn-sm btn-outline-primary"
           onClick={clickFavourite}
+          disabled={errorStats ? true : false}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

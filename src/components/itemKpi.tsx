@@ -12,7 +12,6 @@ interface ItemProps {
 function ItemKpi({ name, value, reference, endpoint, fixed }: ItemProps) {
   const loading = useAppSelector((state) => state.stats.isLoading);
   const errorStats = useAppSelector((state) => state.stats.error);
-  const errorMembers = useAppSelector((state) => state.members.error);
 
   return (
     <>
@@ -22,10 +21,17 @@ function ItemKpi({ name, value, reference, endpoint, fixed }: ItemProps) {
         {!loading ? (
           <>
             <h2 className="card-text d-inline">
-              {value.toFixed(fixed) ?? "-"} {endpoint}
+              {!errorStats ? (
+              <>
+              {value?.toFixed(fixed) ?? "-"} {endpoint}
+              </>
+              ) : (
+              <div style={{fontSize:16}}>нет доступа</div>
+              )
+              }
             </h2>
             <div className="d-inline-flex align-items-center">
-              {reference !== undefined &&
+              {reference !== undefined && !errorStats &&
                 (value < reference ? (
                   <>
                     &nbsp;
