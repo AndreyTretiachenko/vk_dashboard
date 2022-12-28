@@ -450,7 +450,7 @@ function Groups() {
                 </div>
                 <div className="card-body">
                   <div className="d-inline">
-                  {[...response.items].sort((a,b) => ((b.likes.count+b.comments.count+b.reposts.count)/b.views.count - a.likes.count+a.comments.count+a.reposts.count)/a.views.count).map((item) => (
+                  {[...response.items].sort((a,b) => ((b.likes.count+b.comments.count+b.reposts.count)/b.views.count - (a.likes.count+a.comments.count+a.reposts.count)/a.views.count)).slice(0,20).map((item) => (
                     <div className="d-inline m-3" style={{width:300}}>
                       <div className="card">
                         <div className="card-header">
@@ -471,30 +471,46 @@ function Groups() {
                             alt={item.hash}/>
 
                           </div>
-                          <div className="d-inline-flex w-50 mr-2">
+                          <div className="d-inline-flex w-30 mr-1">
                             <p className="mt-2">{item.text.slice(0,100)}...</p>
                           </div>
-                          <div className="d-inline-flex w-10 mr-2">
-                          <div className="card" style={{width: "100px"}}>
+                          <div className="d-inline-flex mr-1">
+                          <div className="card" >
                             <div className="card-body">
-                              <h6 className="card-title">ER</h6>
-                              <h3 className="card-subtitle text-muted">{(item.likes.count+item.reposts.count+item.comments.count)/item.views.count}</h3>
+                              <h5 className="card-title">ER</h5>
+                              <h5 className="card-subtitle text-muted">{((item.likes.count+item.reposts.count+item.comments.count)/item.views.count*100).toFixed(2)}%</h5>
                             </div>
                           </div>
                           </div>
-                          <div className="d-inline-flex w-10 mr-2">
-                          <div className="card" style={{width: "100px"}}>
+                          <div className="d-inline-flex  mr-1">
+                          <div className="card">
                             <div className="card-body">
-                              <h5 className="card-title">ER</h5>
-                              <h6 className="card-subtitle text-muted">123</h6>
+                            <h5 className="card-title">Views</h5>
+                            <h5 className="card-subtitle text-muted">{item.views.count}</h5>
                             </div>
                           </div>
                           </div>
-                          <div className="d-inline-flex w-10 mr-2">
-                          <div className="card" style={{width: "100px"}}>
+                          <div className="d-inline-flex w-10  mr-1">
+                          <div className="card" >
                             <div className="card-body">
-                              <h5 className="card-title">ER</h5>
-                              <h6 className="card-subtitle text-muted">123</h6>
+                            <h5 className="card-title">Comments</h5>
+                            <h5 className="card-subtitle text-muted">{item.comments.count}</h5>
+                            </div>
+                          </div>
+                          </div>
+                          <div className="d-inline-flex  mr-1">
+                          <div className="card" >
+                            <div className="card-body">
+                            <h5 className="card-title">Likes</h5>
+                            <h5 className="card-subtitle text-muted">{item.likes.count}</h5>
+                            </div>
+                          </div>
+                          </div>
+                          <div className="d-inline-flex  mr-1">
+                          <div className="card" >
+                            <div className="card-body">
+                            <h5 className="card-title">Reposts</h5>
+                            <h5 className="card-subtitle text-muted">{item.reposts.count}</h5>
                             </div>
                           </div>
                           </div>
