@@ -32,7 +32,7 @@ import ItemKpi from "./itemKpi";
 
 function Groups() {
   const dispatch = useAppDispatch();
-  const date = new Date()
+  const date = new Date();
 
   const handlerOAuthVK = () => {
     dispatch(getLogin());
@@ -86,7 +86,6 @@ function Groups() {
   };
 
   const handlerGetStatGroup = () => {
-
     dispatch(
       getStats({
         id: -selectInputGroup.id,
@@ -219,14 +218,16 @@ function Groups() {
             </div>
           )}
         </div>
-                
+
         <div style={{ display: "inline-block", width: "100%" }}>
           <div className="card">
             <div className="card-header text-center d-flex align-items-center">
               <div className="d-inline-flex mr-3 ">
                 Общая аналитика группы: &nbsp;
                 <span style={{ fontWeight: 500 }}>
-                  {response.isLoading ? "загрузка ....." : response.groups[0]?.name}
+                  {response.isLoading
+                    ? "загрузка ....."
+                    : response.groups[0]?.name}
                 </span>
               </div>
               {response.count > 0 && (
@@ -240,394 +241,476 @@ function Groups() {
             </div>
 
             <div className="card-body">
-                <h5 className="card-title">Показатели эффективности группы</h5>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"ERpost"}
-                    value={
-                      ((response.result.comments +
-                        response.result.likes +
-                        response.result.reposts) /
-                        response.groups[0]?.members_count /
-                        response.items.length) *
-                      100
-                    }
-                    endpoint={"%"}
-                    reference={2}
-                    fixed={2}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"ERview"}
-                    value={
-                      ((response.result.comments +
-                        response.result.likes +
-                        response.result.reposts) /
-                        response.result.views) *
-                      100
-                    }
-                    endpoint={"%"}
-                    reference={1}
-                    fixed={2}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"LR (Love Rate)"}
-                    value={
-                      (response.result.likes /
-                      response.groups[0]?.members_count /
-                      response.items.length) *
-                      100
-                    }
-                    endpoint={"%"}
-                    reference={1}
-                    fixed={2}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"TR (Talk Rate)"}
-                    value={
-                      (response.result.comments /
-                      response.groups[0]?.members_count /
-                      response.items.length) *
-                      100
-                    }
-                    endpoint={"%"}
-                    reference={1}
-                    fixed={2}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Posts"}
-                    value={response.items.length}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Likes"}
-                    value={response.result.likes}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Comments"}
-                    value={response.result.comments}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Reposts"}
-                    value={response.result.reposts}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Members"}
-                    value={response.groups[0]?.members_count}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"CTR"}
-                    value={
-                      (response.result.views /
-                      response.groups[0]?.members_count /
-                      response.items.length) *
-                      100
-                    }
-                    endpoint={"%"}
-                    reference={10}
-                    fixed={2}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Views"}
-                    value={response.result.views}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-                <div
-                  className="card d-inline-flex m-1"
-                  style={{ width: "250px" }}
-                >
-                  <ItemKpi
-                    name={"Views/Posts"}
-                    value={response.result.views/response.items.length}
-                    endpoint={""}
-                    fixed={0}
-                  />
-                </div>
-
-                <ul>
-                  <li>
-                    ERpost = (лайки+репосты+комментарии)/кол-во подписчиков.
-                    Референс - от 2% хороший реультат
-                  </li>
-                  <li>
-                    ERview = (лайки+репосты+комментарии)/кол-во просмотров
-                    публикации. Референс - от 1% хороший реультат
-                  </li>
-                  <li>
-                    LR(love rate) = лайки/кол-во просмотров публикации/кол-во
-                    подписчиков. Референс - от 1% хороший реультат
-                  </li>
-                  <li>
-                    TR(talk rate) = комментарии/кол-во просмотров
-                    публикации/кол-во подписчиков.
-                  </li>
-                  <li>
-                    Средний ERpost = (Сумма лайков за весь период + сумма
-                    репостов за весь период + сумма комментариев за весь
-                    период)/кол-во подписчиков/кол-во публикаций за весь период
-                  </li>
-                  <li>
-                    ERpost = (лайки+репосты+комментарии)/кол-во подписчиков
-                  </li>
-                  <li>
-                    CTR = просмотры/кол-во подписчиков. Референс - от 10%
-                    хороший реультат
-                  </li>
-                </ul>
-              </div>
-
-            {!response.isLoading && response.error === '' ? (
-              <>
-              <div className="card text-center">
-                <div className="card-header text-center d-flex align-items-center">
-                  <div className="d-inline-flex mr-3">
-                    Топ 20 записей
-                  </div>
-                 
-                </div>
-                <div className="card-body">
-                  <div className="d-inline">
-                  {[...response.items].sort((a,b) => ((b.likes.count+b.comments.count+b.reposts.count)/b.views.count - (a.likes.count+a.comments.count+a.reposts.count)/a.views.count)).slice(0,20).map((item) => (
-                    <div className="d-inline m-3" style={{width:300}}>
-                      <div className="card">
-                        <div className="card-header">
-                          Запись от {new Date(item.date*1000).toLocaleDateString('ru')}
-                        </div>
-                        <div className="card-body d-inline-flex mr-3">
-                          <div className="d-inline-flex mr-3">
-                            <img style={{width:"70px", height:"70px"}} 
-                            src={
-                              item.attachments[0]?.type === 'video' ? item.attachments[0]?.video?.photo_130                         
-                              :
-                              item.attachments[0]?.type === 'photo' ? item.attachments[0]?.photo?.sizes[0]?.url 
-                              :
-                              item.attachments[0]?.type === 'market_album' ? item.attachments[0]?.market_album?.photo?.sizes[0]?.url 
-                              :
-                              ''
-                            }
-                            alt={item.hash}/>
-
-                          </div>
-                          <div className="d-inline-flex w-30 mr-1">
-                            <p className="mt-2">{item.text.slice(0,100)}...</p>
-                          </div>
-                          <div className="d-inline-flex mr-1">
-                          <div className="card" >
-                            <div className="card-body">
-                              <h5 className="card-title">ER</h5>
-                              <h5 className="card-subtitle text-muted">{((item.likes.count+item.reposts.count+item.comments.count)/item.views.count*100).toFixed(2)}%</h5>
-                            </div>
-                          </div>
-                          </div>
-                          <div className="d-inline-flex  mr-1">
-                          <div className="card">
-                            <div className="card-body">
-                            <h5 className="card-title">Views</h5>
-                            <h5 className="card-subtitle text-muted">{item.views.count}</h5>
-                            </div>
-                          </div>
-                          </div>
-                          <div className="d-inline-flex w-10  mr-1">
-                          <div className="card" >
-                            <div className="card-body">
-                            <h5 className="card-title">Comments</h5>
-                            <h5 className="card-subtitle text-muted">{item.comments.count}</h5>
-                            </div>
-                          </div>
-                          </div>
-                          <div className="d-inline-flex  mr-1">
-                          <div className="card" >
-                            <div className="card-body">
-                            <h5 className="card-title">Likes</h5>
-                            <h5 className="card-subtitle text-muted">{item.likes.count}</h5>
-                            </div>
-                          </div>
-                          </div>
-                          <div className="d-inline-flex  mr-1">
-                          <div className="card" >
-                            <div className="card-body">
-                            <h5 className="card-title">Reposts</h5>
-                            <h5 className="card-subtitle text-muted">{item.reposts.count}</h5>
-                            </div>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  </div>
-                </div>
-                <div className="card-footer text-muted">
-                </div>
-              </div>
-              
-              <div className="card text-center mt-2">
-              <div className="card-header">Просмотры постов по дням</div>
-              <div className="card-body">
-                <h5 className="card-title"></h5>
-                <AreaChart
-                  width={1000}
-                  height={500}
-                  data={response.items
-                    .map((item) => {
-                      return {
-                        дата: new Intl.DateTimeFormat("ru", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "2-digit",
-                        }).format(item.date * 1000),
-                        просмотры: item.views ? item.views.count : 0,
-                      };
-                    })
-                    .reverse()}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="50%" stopColor="#8884d8" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="дата" />
-                  <YAxis />
-                  <Tooltip />
-  
-                  <Legend />
-                  <Area
-                    type="monotone"
-                    dataKey="просмотры"
-                    stroke="#82ca9d"
-                    fillOpacity={1}
-                    fill="url(#colorUv)"
-                  />
-                </AreaChart>
-              </div>
-              <div className="card-footer text-muted"></div>
-            </div>
-            <div className="card text-center mt-2">
-            <div className="card-header">
-              Реакции (лайки, репосты, комментарии) по дням
-            </div>
-            <div className="card-body">
-              <h5 className="card-title"></h5>
-              <LineChart
-                width={1000}
-                height={500}
-                data={response.items
-                  .map((item) => {
-                    return {
-                      дата: new Intl.DateTimeFormat("ru", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "2-digit",
-                      }).format(item.date * 1000),
-                      просмотры: item.views ? item.views.count : 0,
-                      лайки: item.likes ? item.likes.count : 0,
-                      комментарии: item.comments ? item.comments.count : 0,
-                      репосты: item.reposts ? item.reposts.count : 0,
-                    };
-                  })
-                  .reverse()}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
+              <h5 className="card-title">Показатели эффективности группы</h5>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="50%" stopColor="#8884d8" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="дата" />
-                <YAxis />
-                <Tooltip />
+                <ItemKpi
+                  name={"ERpost"}
+                  value={
+                    ((response.result.comments +
+                      response.result.likes +
+                      response.result.reposts) /
+                      response.groups[0]?.members_count /
+                      response.items.length) *
+                    100
+                  }
+                  endpoint={"%"}
+                  reference={2}
+                  fixed={2}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"ERview"}
+                  value={
+                    ((response.result.comments +
+                      response.result.likes +
+                      response.result.reposts) /
+                      response.result.views) *
+                    100
+                  }
+                  endpoint={"%"}
+                  reference={1}
+                  fixed={2}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"LR (Love Rate)"}
+                  value={
+                    (response.result.likes /
+                      response.groups[0]?.members_count /
+                      response.items.length) *
+                    100
+                  }
+                  endpoint={"%"}
+                  reference={1}
+                  fixed={2}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"TR (Talk Rate)"}
+                  value={
+                    (response.result.comments /
+                      response.groups[0]?.members_count /
+                      response.items.length) *
+                    100
+                  }
+                  endpoint={"%"}
+                  reference={1}
+                  fixed={2}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Posts"}
+                  value={response.items.length}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Likes"}
+                  value={response.result.likes}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Comments"}
+                  value={response.result.comments}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Reposts"}
+                  value={response.result.reposts}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Members"}
+                  value={response.groups[0]?.members_count}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"CTR"}
+                  value={
+                    (response.result.views /
+                      response.groups[0]?.members_count /
+                      response.items.length) *
+                    100
+                  }
+                  endpoint={"%"}
+                  reference={10}
+                  fixed={2}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Views"}
+                  value={response.result.views}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
+              <div
+                className="card d-inline-flex m-1"
+                style={{ width: "250px" }}
+              >
+                <ItemKpi
+                  name={"Views/Posts"}
+                  value={response.result.views / response.items.length}
+                  endpoint={""}
+                  fixed={0}
+                />
+              </div>
 
-                <Legend />
-                <Line type="monotone" dataKey="комментарии" stroke="blue" />
-                <Line type="monotone" dataKey="лайки" stroke="red" />
-                <Line type="monotone" dataKey="репосты" stroke="#82ca9d" />
-              </LineChart>
+              <ul>
+                <li>
+                  ERpost = (лайки+репосты+комментарии)/кол-во подписчиков.
+                  Референс - от 2% хороший реультат
+                </li>
+                <li>
+                  ERview = (лайки+репосты+комментарии)/кол-во просмотров
+                  публикации. Референс - от 1% хороший реультат
+                </li>
+                <li>
+                  LR(love rate) = лайки/кол-во просмотров публикации/кол-во
+                  подписчиков. Референс - от 1% хороший реультат
+                </li>
+                <li>
+                  TR(talk rate) = комментарии/кол-во просмотров
+                  публикации/кол-во подписчиков.
+                </li>
+                <li>
+                  Средний ERpost = (Сумма лайков за весь период + сумма репостов
+                  за весь период + сумма комментариев за весь период)/кол-во
+                  подписчиков/кол-во публикаций за весь период
+                </li>
+                <li>ERpost = (лайки+репосты+комментарии)/кол-во подписчиков</li>
+                <li>
+                  CTR = просмотры/кол-во подписчиков. Референс - от 10% хороший
+                  реультат
+                </li>
+              </ul>
             </div>
-            <div className="card-footer text-muted"></div>
-          </div>
-            </>
+
+            {!response.isLoading && response.error === "" ? (
+              <>
+                <div className="card text-center">
+                  <div className="card-header text-center d-flex align-items-center">
+                    <div className="d-inline-flex mr-3">Топ 20 записей</div>
+                  </div>
+                  <div className="card-body">
+                    <div className="d-inline">
+                      {[...response.items]
+                        .sort(
+                          (a, b) =>
+                            (b.likes.count +
+                              b.comments.count +
+                              b.reposts.count) /
+                              b.views.count -
+                            (a.likes.count +
+                              a.comments.count +
+                              a.reposts.count) /
+                              a.views.count
+                        )
+                        .slice(0, 20)
+                        .filter((item) => item.attachments.length !== 0)
+                        .map((item) => (
+                          <div className="d-inline m-3" style={{ width: 300 }}>
+                            <div className="card">
+                              <div className="card-header d-flex">
+                                Запись от{" "}
+                                {new Date(item.date * 1000).toLocaleDateString(
+                                  "ru"
+                                )}
+                                ,&nbsp;тип контента:{" "}
+                                {Array(
+                                  new Set(item.attachments.map((i) => i.type))
+                                )}
+                              </div>
+                              <div className="card-body d-inline-flex">
+                                <div className="d-inline-flex mr-3">
+                                  <img
+                                    style={{ width: "100px", height: "100px" }}
+                                    src={
+                                      item.attachments[0]?.type === "video"
+                                        ? item.attachments[0]?.video?.photo_130
+                                        : item.attachments[0]?.type === "photo"
+                                        ? item.attachments[0]?.photo?.sizes[0]
+                                            ?.url
+                                        : item.attachments[0]?.type ===
+                                          "market_album"
+                                        ? item.attachments[0]?.market_album
+                                            ?.photo?.sizes[0]?.url
+                                        : ""
+                                    }
+                                    alt={item.hash}
+                                  />
+                                </div>
+                                <div
+                                  className="d-inline-flex "
+                                  style={{ width: "40%" }}
+                                >
+                                  <a
+                                    href={`https://vk.com/${response.groups[0]?.screen_name}?w=wall${item.from_id}_${item.id}`}
+                                    target="blank"
+                                    className="m-0 mr-3"
+                                    style={{ textAlign: "justify" }}
+                                  >
+                                    {item.text.slice(0, 100)}...
+                                  </a>
+                                </div>
+                                <div className="d-inline-flex mr-1">
+                                  <div className="card">
+                                    <div className="card-body">
+                                      <h5 className="card-title">ER</h5>
+                                      <h5 className="card-subtitle text-muted">
+                                        {(
+                                          ((item.likes.count +
+                                            item.reposts.count +
+                                            item.comments.count) /
+                                            item.views.count) *
+                                          100
+                                        ).toFixed(2)}
+                                        %
+                                      </h5>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="d-inline-flex  mr-1">
+                                  <div className="card">
+                                    <div className="card-body">
+                                      <h5 className="card-title">Views</h5>
+                                      <h5 className="card-subtitle text-muted">
+                                        {item.views.count}
+                                      </h5>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="d-inline-flex w-10  mr-1">
+                                  <div className="card">
+                                    <div className="card-body">
+                                      <h5 className="card-title">Comments</h5>
+                                      <h5 className="card-subtitle text-muted">
+                                        {item.comments.count}
+                                      </h5>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="d-inline-flex  mr-1">
+                                  <div className="card">
+                                    <div className="card-body">
+                                      <h5 className="card-title">Likes</h5>
+                                      <h5 className="card-subtitle text-muted">
+                                        {item.likes.count}
+                                      </h5>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="d-inline-flex  mr-1">
+                                  <div className="card">
+                                    <div className="card-body">
+                                      <h5 className="card-title">Reposts</h5>
+                                      <h5 className="card-subtitle text-muted">
+                                        {item.reposts.count}
+                                      </h5>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className="card-footer text-muted"></div>
+                </div>
+
+                <div className="card text-center mt-2">
+                  <div className="card-header">Просмотры постов по дням</div>
+                  <div className="card-body">
+                    <h5 className="card-title"></h5>
+                    <AreaChart
+                      width={1000}
+                      height={500}
+                      data={response.items
+                        .map((item) => {
+                          return {
+                            дата: new Intl.DateTimeFormat("ru", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "2-digit",
+                            }).format(item.date * 1000),
+                            просмотры: item.views ? item.views.count : 0,
+                          };
+                        })
+                        .reverse()}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <defs>
+                        <linearGradient
+                          id="colorUv"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="50%"
+                            stopColor="#8884d8"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#8884d8"
+                            stopOpacity={0}
+                          />
+                        </linearGradient>
+                      </defs>
+                      <XAxis dataKey="дата" />
+                      <YAxis />
+                      <Tooltip />
+
+                      <Legend />
+                      <Area
+                        type="monotone"
+                        dataKey="просмотры"
+                        stroke="#82ca9d"
+                        fillOpacity={1}
+                        fill="url(#colorUv)"
+                      />
+                    </AreaChart>
+                  </div>
+                  <div className="card-footer text-muted"></div>
+                </div>
+                <div className="card text-center mt-2">
+                  <div className="card-header">
+                    Реакции (лайки, репосты, комментарии) по дням
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title"></h5>
+                    <LineChart
+                      width={1000}
+                      height={500}
+                      data={response.items
+                        .map((item) => {
+                          return {
+                            дата: new Intl.DateTimeFormat("ru", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "2-digit",
+                            }).format(item.date * 1000),
+                            просмотры: item.views ? item.views.count : 0,
+                            лайки: item.likes ? item.likes.count : 0,
+                            комментарии: item.comments
+                              ? item.comments.count
+                              : 0,
+                            репосты: item.reposts ? item.reposts.count : 0,
+                          };
+                        })
+                        .reverse()}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <defs>
+                        <linearGradient
+                          id="colorUv"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="50%"
+                            stopColor="#8884d8"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#8884d8"
+                            stopOpacity={0}
+                          />
+                        </linearGradient>
+                      </defs>
+                      <XAxis dataKey="дата" />
+                      <YAxis />
+                      <Tooltip />
+
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="комментарии"
+                        stroke="blue"
+                      />
+                      <Line type="monotone" dataKey="лайки" stroke="red" />
+                      <Line
+                        type="monotone"
+                        dataKey="репосты"
+                        stroke="#82ca9d"
+                      />
+                    </LineChart>
+                  </div>
+                  <div className="card-footer text-muted"></div>
+                </div>
+              </>
             ) : (
-            <>
-            
-            </>
+              <></>
             )}
 
             <div className="card-footer text-muted">
@@ -639,8 +722,6 @@ function Groups() {
               </p>
             </div>
           </div>
-          
-          
         </div>
       </div>
     </>
