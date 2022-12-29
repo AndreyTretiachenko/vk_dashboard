@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../hooks/hookStore";
+import {useAppSelector} from "../hooks/hookStore";
 
 interface ItemProps {
   name: string;
@@ -9,9 +9,9 @@ interface ItemProps {
   fixed: number;
 }
 
-function ItemKpi({ name, value, reference, endpoint, fixed }: ItemProps) {
-  const loading = useAppSelector((state) => state.stats.isLoading);
-  const errorStats = useAppSelector((state) => state.stats.error);
+function ItemKpi({name, value, reference, endpoint, fixed}: ItemProps) {
+  const loading = useAppSelector(state => state.stats.isLoading);
+  const errorStats = useAppSelector(state => state.stats.error);
 
   return (
     <>
@@ -22,16 +22,16 @@ function ItemKpi({ name, value, reference, endpoint, fixed }: ItemProps) {
           <>
             <h2 className="card-text d-inline">
               {!errorStats ? (
-              <>
-              {value?.toFixed(fixed) ?? "-"} {endpoint}
-              </>
+                <>
+                  {value?.toFixed(fixed) ?? "-"} {endpoint}
+                </>
               ) : (
-              <div style={{fontSize:16}}>нет доступа</div>
-              )
-              }
+                <div style={{fontSize: 16}}>нет доступа</div>
+              )}
             </h2>
             <div className="d-inline-flex align-items-center">
-              {reference !== undefined && !errorStats &&
+              {reference !== undefined &&
+                !errorStats &&
                 (value < reference ? (
                   <>
                     &nbsp;
@@ -64,10 +64,8 @@ function ItemKpi({ name, value, reference, endpoint, fixed }: ItemProps) {
             </div>
           </>
         ) : (
-          <div className="d-flex justify-content-center p-5">
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Загрузка...</span>
-            </div>
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Загрузка...</span>
           </div>
         )}
       </div>
