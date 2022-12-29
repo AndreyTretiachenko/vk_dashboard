@@ -442,7 +442,7 @@ function Groups() {
               <>
                 <div className="card text-center">
                   <div className="card-header text-center d-flex align-items-center">
-                    <div className="d-inline-flex mr-3">Топ 20 записей</div>
+                    <div className="d-inline-flex mr-3">Топ записей по ER (за выбранный период)</div>
                   </div>
                   <div className="card-body">
                     <div className="d-inline">
@@ -469,14 +469,14 @@ function Groups() {
                                   "ru"
                                 )}
                                 ,&nbsp;тип контента:{" "}
-                                {Array(
-                                  new Set(item.attachments.map((i) => i.type))
+                                {new Array(
+                                  new Set([...item.attachments].map((i) => i.type+'; '))
                                 )}
                               </div>
                               <div className="card-body d-inline-flex">
                                 <div className="d-inline-flex mr-3">
                                   <img
-                                    style={{ width: "100px", height: "100px" }}
+                                    style={{ width: "100px", height: "100px", border: "1px solid", borderRadius: "100px"  }}
                                     src={
                                       item.attachments[0]?.type === "video"
                                         ? item.attachments[0]?.video?.photo_130
