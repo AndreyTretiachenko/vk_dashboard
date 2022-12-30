@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
+groups:[{
   membersList: [],
   memberNew:[],
   groupName: "",
@@ -10,6 +11,8 @@ const initialState = {
   error: "",
   type: "",
   isClosed: false,
+}
+]
 };
 
 export const getParseMember = createAsyncThunk(
@@ -62,31 +65,64 @@ export const getGroupInfo = createAsyncThunk(
 export const parseSlice = createSlice({
   name: "parseMember",
   initialState,
-  reducers: {},
+  reducers: {
+    addGroup:(state:any, action) => {
+      return state.groups.push(action.payload)
+    },
+    removeGroup:(state, action) => {
+      return state.groups.filter((item) => {
+        return item.groupId !== action.payload.id
+      })
+    }
+  },
   extraReducers(builder) {
     builder
-      .addCase(getParseMember.pending, (state, action) => {
-        state.isLoading = true;
+      .addCase(getParseMember.pending, (state, action:PayloadAction<any>) => {
+        state.groups.map((item) => {
+          if (item.groupId === action.payload.id)
+            return {...item, isLoading: true}
+          else
+            return item  
+          })
+        
       })
       .addCase(
         getParseMember.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.isLoading = false;
-          state.membersList = action.payload.items;
-          state.error = '';
+          state.groups.map((item) => {
+            if (item.groupId === action.payload.id)
+              return {...item, isLoading: false, membersList:action.payload.items, error:''}
+            else
+              return item  
+            })
         }
       )
-      .addCase(getParseMember.rejected, (state, action) => {
-        state.error = "error parseMember";
-        state.isLoading = false;
+      .addCase(getParseMember.rejected, (state, action:PayloadAction<any>) => {
+        state.groups.map((item) => {
+          if (item.groupId === action.payload.id)
+            return {...item, isLoading: false, error:'error parseMember'}
+          else
+            return item  
+          })
       })
       .addCase(getGroupInfo.fulfilled, (state, action: PayloadAction<any>) => {
-        state.groupId = action.payload.name;
-        state.groupId = action.payload.id;
-        state.screenName = action.payload.screen_name;
-        state.type = action.payload.type;
-        state.isClosed = action.payload.is_closed;
-        state.error = '';
+        state.groups.map((item) => {
+          if (item.groupId === action.payload.id)
+            return {
+              ...item, 
+              isLoading: false, 
+              error:'error parseMember',
+              groupName:action.payload.name,
+              groupId: action.payload.id,
+              screenName: action.payload.screen_name,
+              type: action.payload.type,
+              isClosed: action.payload.is_closed,
+
+            }
+          else
+            return item  
+          })
+
       });
   },
 });
