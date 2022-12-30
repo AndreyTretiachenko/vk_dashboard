@@ -117,7 +117,6 @@ export const parseSlice = createSlice({
               screenName: action.payload.screen_name,
               type: action.payload.type,
               isClosed: action.payload.is_closed,
-
             }
           else
             return item  
@@ -127,5 +126,5 @@ export const parseSlice = createSlice({
   },
 });
 
-export const {} = parseSlice.actions;
+export const { addGroup, removeGroup } = parseSlice.actions;
 export default parseSlice.reducer;
