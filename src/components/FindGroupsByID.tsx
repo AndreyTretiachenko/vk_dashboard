@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {clearList} from "../features/findDroupByIdSlice";
 import {useAppDispatch} from "../hooks/hookStore";
 import {TselectInputGroup} from "../models/stats";
@@ -17,6 +17,10 @@ export default function FindGroupsByID(props: propsFind) {
   const handleFind = () => {
     props.pressFind(q);
   };
+
+  useEffect(() => {
+    setSelect({name: props.listFind[0]?.name, id: props.listFind[0]?.id});
+  }, [props.listFind]);
 
   return (
     <>
@@ -71,6 +75,7 @@ export default function FindGroupsByID(props: propsFind) {
                   Выберите необходимую группу из списка:
                 </label>
                 <select
+                  value={props.listFind[0]?.name}
                   name="selectFind"
                   className="form-control form-control-sm"
                   onChange={e =>
@@ -82,7 +87,7 @@ export default function FindGroupsByID(props: propsFind) {
                     })
                   }
                 >
-                  {props.listFind.map(item => (
+                  {props.listFind.map((item, index) => (
                     <option
                       key={item.id}
                       value={item.id}
@@ -112,7 +117,11 @@ export default function FindGroupsByID(props: propsFind) {
                 <button
                   type="button"
                   className="btn btn-success btn-sm"
-                  onClick={() => props.addGroup(select)}
+                  onClick={() => {
+                    props.addGroup(select);
+                    dispatch(clearList([]));
+                    setQ("");
+                  }}
                   data-dismiss="modal"
                 >
                   Добавить группу

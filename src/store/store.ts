@@ -16,11 +16,12 @@ import favouriteSlice from "../features/favouriteSlice";
 import storage from "redux-persist/lib/storage";
 import FindGroupsByID from "../components/FindGroupsByID";
 import findDroupByIdSlice from "../features/findDroupByIdSlice";
+import parseSlice from "../features/parseSlice";
 
 const persistConfig = {
   key: "myroot",
   storage: storage,
-  blacklist: ['login']
+  blacklist: ['login', 'search']
 
 };
 
@@ -30,6 +31,7 @@ const reducers = combineReducers({
   members: membersSlice,
   favourite: favouriteSlice,
   search: findDroupByIdSlice,
+  parse:parseSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
