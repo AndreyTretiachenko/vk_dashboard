@@ -126,6 +126,7 @@ export interface Group {
   is_closed: number;
   type: string;
   is_admin: number;
+  admin_level: number;
   is_member: number;
   is_advertiser: number;
   photo_50: string;

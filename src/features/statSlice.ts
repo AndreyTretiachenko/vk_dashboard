@@ -16,7 +16,7 @@ const request = (settings) => {
         owner_id: settings.id,
         offset: settings.offset,
         count: settings.count,
-        fields:'members_count, is_admin',
+        fields:'is_admin, admin_level, members_count',
         v: "5.86",
       },
       (res) => {

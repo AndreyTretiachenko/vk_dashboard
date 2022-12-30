@@ -10,7 +10,7 @@ export const getLogin = createAsyncThunk(
                   // @ts-ignore
                   VK.Auth.login((res) => {
                     resolve(res)
-                  }, 1048576
+                  }, 262144
                 )})
         } catch (error:any)
         {
