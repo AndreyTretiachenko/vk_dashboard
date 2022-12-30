@@ -55,6 +55,14 @@ export interface Attachment {
   photo: Photo;
   video: Video;
   market_album?: market;
+  link: link;
+}
+
+export interface link {
+  url: string;
+  description: string;
+  title: string;
+  photo:Photo;
 }
 
 export interface market {

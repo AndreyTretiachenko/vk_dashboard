@@ -427,7 +427,11 @@ function Groups() {
                         .slice(0, 20)
                         .filter(item => item.attachments.length !== 0)
                         .map(item => (
-                          <div className="d-inline m-3" style={{width: 300}}>
+                          <div
+                            key={item.hash}
+                            className="d-inline m-3"
+                            style={{width: 300}}
+                          >
                             <div className="card">
                               <div className="card-header d-flex">
                                 Запись от{" "}
@@ -464,6 +468,9 @@ function Groups() {
                                           "market_album"
                                         ? item.attachments[0]?.market_album
                                             ?.photo?.sizes[0]?.url
+                                        : item.attachments[0]?.type === "link"
+                                        ? item.attachments[0]?.link?.photo
+                                            ?.sizes[0].url
                                         : ""
                                     }
                                     alt={item.hash}
