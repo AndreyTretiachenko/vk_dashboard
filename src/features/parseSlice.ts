@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   membersList: [],
+  memberNew:[],
   groupName: "",
   groupId: "",
   screenName: "",
@@ -72,10 +73,12 @@ export const parseSlice = createSlice({
         (state, action: PayloadAction<any>) => {
           state.isLoading = false;
           state.membersList = action.payload.items;
+          state.error = '';
         }
       )
       .addCase(getParseMember.rejected, (state, action) => {
         state.error = "error parseMember";
+        state.isLoading = false;
       })
       .addCase(getGroupInfo.fulfilled, (state, action: PayloadAction<any>) => {
         state.groupId = action.payload.name;
@@ -83,6 +86,7 @@ export const parseSlice = createSlice({
         state.screenName = action.payload.screen_name;
         state.type = action.payload.type;
         state.isClosed = action.payload.is_closed;
+        state.error = '';
       });
   },
 });

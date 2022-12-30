@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { TselectInputGroup } from "../models/stats";
+import React, {useState} from "react";
+import {clearList} from "../features/findDroupByIdSlice";
+import {useAppDispatch} from "../hooks/hookStore";
+import {TselectInputGroup} from "../models/stats";
 
 interface propsFind {
   pressFind: (q: string) => void;
   listFind: TselectInputGroup[];
-  addGroup: (select: { name: string; id: number }) => void;
+  addGroup: (select: {name: string; id: number}) => void;
 }
 
 export default function FindGroupsByID(props: propsFind) {
   const [q, setQ] = useState<string>("");
-  const [select, setSelect] = useState({ name: "", id: 0 });
+  const [select, setSelect] = useState({name: "", id: 0});
+  const dispatch = useAppDispatch();
 
   const handleFind = () => {
     props.pressFind(q);
@@ -17,7 +20,7 @@ export default function FindGroupsByID(props: propsFind) {
 
   return (
     <>
-      <div className="ml-2">
+      <div className="ml-2 d-inline">
         <button
           className="btn btn-sm btn-primary"
           data-toggle="modal"
@@ -54,7 +57,7 @@ export default function FindGroupsByID(props: propsFind) {
                 <input
                   name="inputFind"
                   value={q}
-                  onChange={(e) => setQ(e.target.value)}
+                  onChange={e => setQ(e.target.value)}
                   className="form-control form-control-sm d-inline w-75 mr-3"
                   type={"text"}
                 />
@@ -70,7 +73,7 @@ export default function FindGroupsByID(props: propsFind) {
                 <select
                   name="selectFind"
                   className="form-control form-control-sm"
-                  onChange={(e) =>
+                  onChange={e =>
                     setSelect({
                       id: Number(e.target.value),
                       name: e.target.options[
@@ -79,7 +82,7 @@ export default function FindGroupsByID(props: propsFind) {
                     })
                   }
                 >
-                  {props.listFind.map((item) => (
+                  {props.listFind.map(item => (
                     <option
                       key={item.id}
                       value={item.id}
@@ -99,7 +102,10 @@ export default function FindGroupsByID(props: propsFind) {
                   type="button"
                   className="btn btn-secondary btn-sm"
                   data-dismiss="modal"
-                  onClick={() => setQ("")}
+                  onClick={() => {
+                    dispatch(clearList([]));
+                    setQ("");
+                  }}
                 >
                   Закрыть
                 </button>

@@ -34,7 +34,11 @@ const initialState = {
 export const findFroupByIdSlice = createSlice({
   name: "findGroup",
   initialState,
-  reducers: {},
+  reducers: {
+    clearList:(state, action) => {
+      state.search = action.payload
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(findGroup.pending, (state, action) => {
@@ -51,5 +55,5 @@ export const findFroupByIdSlice = createSlice({
   },
 });
 
-export const {} = findFroupByIdSlice.actions;
+export const { clearList } = findFroupByIdSlice.actions;
 export default findFroupByIdSlice.reducer;
