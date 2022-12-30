@@ -13,6 +13,7 @@ import FindGroupsByID from "./FindGroupsByID";
 function ParseMember() {
   const dispatch = useAppDispatch();
   const {data} = useAppSelector(state => state.login);
+  const listGroup = useAppSelector(state => state.parse);
   const findListGroup = useAppSelector(state => state.search);
   const [inputGroupParse, setinputGroupParse] = useState([]);
   const [selectInputGroupParse, setSelectInputGroupParse] = useState(
@@ -102,13 +103,9 @@ function ParseMember() {
         <div className="row">
           <div className="col m-2">
             <ul className="list-group">
-              <li className="list-group-item active" aria-current="true">
-                An active item
-              </li>
-              <li className="list-group-item">A second item</li>
-              <li className="list-group-item">A third item</li>
-              <li className="list-group-item">A fourth item</li>
-              <li className="list-group-item">And a fifth one</li>
+              {listGroup.map(item => (
+                <li className="list-group-item">A second item</li>
+              ))}
             </ul>
           </div>
           <div className="col m-2">Информация по группе</div>
