@@ -109,6 +109,7 @@ export interface Item {
   reposts: Reposts;
   views: Views;
   hash: string;
+  reachStats: Reach;
 }
 
 export interface StatResult {
@@ -140,6 +141,20 @@ export interface TstatsGroup {
   isLoading: boolean;
   result: StatResult;
   groups: Group[];
+}
+
+export interface Reach {
+  hide: number;
+  join_group: number;
+  links: number;
+  post_id: number;
+  reach_ads: number;
+  reach_subscribers: number;
+  reach_total: number;
+  reach_viral: number;
+  report: number;
+  to_group: number;
+  unsubscribe: number;
 }
 
 export interface Tmembers {

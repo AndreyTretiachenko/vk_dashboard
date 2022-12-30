@@ -20,6 +20,8 @@ import findDroupByIdSlice from "../features/findDroupByIdSlice";
 const persistConfig = {
   key: "myroot",
   storage: storage,
+  blacklist: ['login']
+
 };
 
 const reducers = combineReducers({

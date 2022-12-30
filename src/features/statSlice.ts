@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { useAppSelector } from "../hooks/hookStore";
 import { TstatsGroup } from "../models/stats";
 
 function sleep(ms) {
@@ -15,7 +16,7 @@ const request = (settings) => {
         owner_id: settings.id,
         offset: settings.offset,
         count: settings.count,
-        fields:'members_count',
+        fields:'members_count, is_admin',
         v: "5.86",
       },
       (res) => {
@@ -25,6 +26,8 @@ const request = (settings) => {
     );
   });
 };
+
+
 
 export const getStats = createAsyncThunk(
   "vk/getStats",
@@ -38,6 +41,7 @@ export const getStats = createAsyncThunk(
     },
     thunkApi
   ) => {
+    
     try {
       let statsAll = {
         count: 0,
@@ -74,6 +78,8 @@ export const getStats = createAsyncThunk(
         await request(settings)
           // eslint-disable-next-line no-loop-func
           .then((res: any) => {
+            
+
             statsAll = {
               ...statsAll,
               count: statsAll.count + res.count,
