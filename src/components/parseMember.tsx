@@ -6,6 +6,7 @@ import {
   getStatus,
   updateData,
 } from "../features/loginSlice";
+import { addGroup } from "../features/parseSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hookStore";
 import { TselectInputGroup } from "../models/stats";
 import FindGroupsByID from "./FindGroupsByID";
@@ -32,6 +33,20 @@ function ParseMember() {
     dispatch(getLogin());
   };
 
+  const handlerAddToList = () => {
+    dispatch(
+      addGroup({
+        groupName: selectInputGroupParse.name,
+        groupId: selectInputGroupParse.id,
+        screenName: "",
+        isLoading: false,
+        error: "",
+        type: "",
+        isClosed: false,
+      })
+    );
+  };
+
   useEffect(() => {
     dispatch(getStatus())
       .then((res: any) => {
@@ -48,7 +63,7 @@ function ParseMember() {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 p-0 m-0 mt-2">
             <img
               alt=""
               src={data.photo}
@@ -67,7 +82,7 @@ function ParseMember() {
               </button>
             )}
           </div>
-          <div className="col m-2 d-inline-flex">
+          <div className="col p-0 m-0 d-inline mt-3">
             <select
               onChange={(e) => {
                 setSelectInputGroupParse({
@@ -98,15 +113,20 @@ function ParseMember() {
               pressFind={handlePressFind}
               addGroup={handlerAddGroup}
             />
+            <button
+              onClick={handlerAddToList}
+              className="btn btn-sm btn-primary ml-2"
+            >
+              добавить в список
+            </button>
           </div>
         </div>
         <div className="row">
           <div className="col m-2">
             <ul className="list-group">
-              {listGroup.lenght !== 0 &&
-                listGroup.map((item) => (
-                  <li className="list-group-item">A second item</li>
-                ))}
+              {listGroup.map((item) => (
+                <li className="list-group-item">A second item</li>
+              ))}
             </ul>
           </div>
           <div className="col m-2">Информация по группе</div>

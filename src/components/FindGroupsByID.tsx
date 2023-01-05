@@ -75,7 +75,6 @@ export default function FindGroupsByID(props: propsFind) {
                   Выберите необходимую группу из списка:
                 </label>
                 <select
-                  value={props.listFind[0]?.name}
                   name="selectFind"
                   className="form-control form-control-sm"
                   onChange={(e) =>
