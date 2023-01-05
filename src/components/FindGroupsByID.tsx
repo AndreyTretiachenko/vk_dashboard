@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {clearList} from "../features/findDroupByIdSlice";
-import {useAppDispatch} from "../hooks/hookStore";
-import {TselectInputGroup} from "../models/stats";
+import React, { useEffect, useState } from "react";
+import { clearList } from "../features/findDroupByIdSlice";
+import { useAppDispatch } from "../hooks/hookStore";
+import { TselectInputGroup } from "../models/stats";
 
 interface propsFind {
   pressFind: (q: string) => void;
   listFind: TselectInputGroup[];
-  addGroup: (select: {name: string; id: number}) => void;
+  addGroup: (select: { name: string; id: number }) => void;
 }
 
 export default function FindGroupsByID(props: propsFind) {
   const [q, setQ] = useState<string>("");
-  const [select, setSelect] = useState({name: "", id: 0});
+  const [select, setSelect] = useState({ name: "", id: 0 });
   const dispatch = useAppDispatch();
 
   const handleFind = () => {
@@ -19,7 +19,7 @@ export default function FindGroupsByID(props: propsFind) {
   };
 
   useEffect(() => {
-    setSelect({name: props.listFind[0]?.name, id: props.listFind[0]?.id});
+    setSelect({ name: props.listFind[0]?.name, id: props.listFind[0]?.id });
   }, [props.listFind]);
 
   return (
@@ -30,7 +30,7 @@ export default function FindGroupsByID(props: propsFind) {
           data-toggle="modal"
           data-target="#AddGroupModal"
         >
-          Добавить группу
+          Найти группу
         </button>
         <div
           className="modal fade"
@@ -61,7 +61,7 @@ export default function FindGroupsByID(props: propsFind) {
                 <input
                   name="inputFind"
                   value={q}
-                  onChange={e => setQ(e.target.value)}
+                  onChange={(e) => setQ(e.target.value)}
                   className="form-control form-control-sm d-inline w-75 mr-3"
                   type={"text"}
                 />
@@ -78,7 +78,7 @@ export default function FindGroupsByID(props: propsFind) {
                   value={props.listFind[0]?.name}
                   name="selectFind"
                   className="form-control form-control-sm"
-                  onChange={e =>
+                  onChange={(e) =>
                     setSelect({
                       id: Number(e.target.value),
                       name: e.target.options[

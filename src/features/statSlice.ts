@@ -16,7 +16,7 @@ const request = (settings) => {
         owner_id: settings.id,
         offset: settings.offset,
         count: settings.count,
-        fields:'is_admin, admin_level, members_count',
+        fields: "is_admin, admin_level, members_count",
         v: "5.86",
       },
       (res) => {
@@ -26,8 +26,6 @@ const request = (settings) => {
     );
   });
 };
-
-
 
 export const getStats = createAsyncThunk(
   "vk/getStats",
@@ -41,7 +39,6 @@ export const getStats = createAsyncThunk(
     },
     thunkApi
   ) => {
-    
     try {
       let statsAll = {
         count: 0,
@@ -78,8 +75,6 @@ export const getStats = createAsyncThunk(
         await request(settings)
           // eslint-disable-next-line no-loop-func
           .then((res: any) => {
-            
-
             statsAll = {
               ...statsAll,
               count: statsAll.count + res.count,
@@ -158,7 +153,7 @@ export const statSlice = createSlice({
         let reposts = 0;
         if (action.payload !== undefined) {
           action.payload.items.map((item: any) => {
-            if (item.reposts.count !== undefined)
+            if (item.reposts !== undefined)
               return (reposts += item.reposts.count);
           });
           state.result.reposts = reposts;
