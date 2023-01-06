@@ -1,9 +1,9 @@
 import React from "react";
-import { useAppSelector } from "../hooks/hookStore";
+import { useAppSelector } from "../../hooks/hookStore";
 
-function FafouriteButton({ id, clickFavourite }) {
+export const FafouriteButton = ({ id, clickFavourite }) => {
   const favouriteList = useAppSelector((state) => state.favourite.items);
-  const errorStats = useAppSelector((state) => state.stats.error)
+  const errorStats = useAppSelector((state) => state.stats.error);
   return (
     <>
       <div style={{ position: "absolute", right: 0, marginRight: 10 }}>
@@ -29,6 +29,4 @@ function FafouriteButton({ id, clickFavourite }) {
       </div>
     </>
   );
-}
-
-export default FafouriteButton;
+};

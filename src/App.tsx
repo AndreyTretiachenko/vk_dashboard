@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import Groups from "./components/Groups";
 import { store } from "./store/store";
-import ParseMember from "./components/parseMember";
+import ParseMember from "./components/ParseMember";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 

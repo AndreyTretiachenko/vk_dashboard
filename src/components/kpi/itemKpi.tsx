@@ -1,5 +1,5 @@
 import React from "react";
-import {useAppSelector} from "../hooks/hookStore";
+import { useAppSelector } from "../../hooks/hookStore";
 
 interface ItemProps {
   name: string;
@@ -9,9 +9,9 @@ interface ItemProps {
   fixed: number;
 }
 
-function ItemKpi({name, value, reference, endpoint, fixed}: ItemProps) {
-  const loading = useAppSelector(state => state.stats.isLoading);
-  const errorStats = useAppSelector(state => state.stats.error);
+function ItemKpi({ name, value, reference, endpoint, fixed }: ItemProps) {
+  const loading = useAppSelector((state) => state.stats.isLoading);
+  const errorStats = useAppSelector((state) => state.stats.error);
 
   return (
     <>
@@ -26,7 +26,7 @@ function ItemKpi({name, value, reference, endpoint, fixed}: ItemProps) {
                   {value?.toFixed(fixed) ?? "-"} {endpoint}
                 </>
               ) : (
-                <div style={{fontSize: 16}}>нет доступа</div>
+                <div style={{ fontSize: 16 }}>нет доступа</div>
               )}
             </h2>
             <div className="d-inline-flex align-items-center">

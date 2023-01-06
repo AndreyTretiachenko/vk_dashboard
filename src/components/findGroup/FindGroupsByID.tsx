@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { clearList } from "../features/findDroupByIdSlice";
-import { useAppDispatch } from "../hooks/hookStore";
-import { TselectInputGroup } from "../models/stats";
+import { clearList } from "../../features/findDroupByIdSlice";
+import { useAppDispatch } from "../../hooks/hookStore";
+import { TselectInputGroup } from "../../models/stats";
 
 interface propsFind {
   pressFind: (q: string) => void;

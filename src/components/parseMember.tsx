@@ -9,7 +9,7 @@ import {
 import { addGroup } from "../features/parseSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hookStore";
 import { TselectInputGroup } from "../models/stats";
-import FindGroupsByID from "./FindGroupsByID";
+import FindGroupsByID from "./findGroup/FindGroupsByID";
 
 function ParseMember() {
   const dispatch = useAppDispatch();

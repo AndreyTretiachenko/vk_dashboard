@@ -21,14 +21,14 @@ import {
 import { getGroupInfo } from "../features/membersSlice";
 import { TselectInputGroup } from "../models/stats";
 import { groupIDs } from "../data/groupsIDs";
-import FafouriteButton from "./FafouriteButton";
+import { FafouriteButton } from "./favouriteButton/FafouriteButton";
 import {
   addFavouriteItem,
   updateFavouriteList,
 } from "../features/favouriteSlice";
-import FindGroupsByID from "./FindGroupsByID";
+import FindGroupsByID from "./findGroup/FindGroupsByID";
 import { findGroup } from "../features/findDroupByIdSlice";
-import ItemKpi from "./itemKpi";
+import ItemKpi from "./kpi/itemKpi";
 
 function Groups() {
   const dispatch = useAppDispatch();
