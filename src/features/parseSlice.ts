@@ -1,19 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  groups: [
-    {
-      membersList: [],
-      memberNew: [],
-      groupName: "",
-      groupId: "",
-      screenName: "",
-      isLoading: false,
-      error: "",
-      type: "",
-      isClosed: false,
-    },
-  ],
+  groups: [],
+  isLoading: false,
+  error: "",
 };
 
 export const getParseMember = createAsyncThunk(
@@ -78,51 +68,22 @@ export const parseSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getParseMember.pending, (state, action: PayloadAction<any>) => {
-        state.groups.map((item) => {
-          if (item.groupId === action.payload.id)
-            return { ...item, isLoading: true };
-          else return item;
-        });
-      })
+      .addCase(
+        getParseMember.pending,
+        (state, action: PayloadAction<any>) => {}
+      )
       .addCase(
         getParseMember.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.groups.map((item) => {
-            if (item.groupId === action.payload.id)
-              return {
-                ...item,
-                isLoading: false,
-                membersList: action.payload.items,
-                error: "",
-              };
-            else return item;
-          });
-        }
+        (state, action: PayloadAction<any>) => {}
       )
-      .addCase(getParseMember.rejected, (state, action: PayloadAction<any>) => {
-        state.groups.map((item) => {
-          if (item.groupId === action.payload.id)
-            return { ...item, isLoading: false, error: "error parseMember" };
-          else return item;
-        });
-      })
-      .addCase(getGroupInfo.fulfilled, (state, action: PayloadAction<any>) => {
-        state.groups.map((item) => {
-          if (item.groupId === action.payload.id)
-            return {
-              ...item,
-              isLoading: false,
-              error: "error parseMember",
-              groupName: action.payload.name,
-              groupId: action.payload.id,
-              screenName: action.payload.screen_name,
-              type: action.payload.type,
-              isClosed: action.payload.is_closed,
-            };
-          else return item;
-        });
-      });
+      .addCase(
+        getParseMember.rejected,
+        (state, action: PayloadAction<any>) => {}
+      )
+      .addCase(
+        getGroupInfo.fulfilled,
+        (state, action: PayloadAction<any>) => {}
+      );
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { findGroup } from "../features/findDroupByIdSlice";
 import {
   getDataUser,
@@ -11,18 +11,39 @@ import { useAppDispatch, useAppSelector } from "../hooks/hookStore";
 import { TselectInputGroup } from "../models/stats";
 import FindGroupsByID from "./findGroup/FindGroupsByID";
 
-function ParseMember() {
+export const ParseMember = () => {
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.login);
   const listGroup = useAppSelector((state) => state.parse.groups);
   const findListGroup = useAppSelector((state) => state.search);
   const [inputGroupParse, setinputGroupParse] = useState([]);
+
   const [selectInputGroupParse, setSelectInputGroupParse] = useState(
     {} as TselectInputGroup
   );
+  const selectRef = useRef(null);
+
+  const handlerSelectGroup = (id) => {
+    alert(id);
+  };
+
+  const handlerOverGroup = (e: React.MouseEvent) => {
+    e.currentTarget.classList.add(...["bg-primary", "text-white"]);
+  };
+  const handlerLeaveGroup = (e: React.MouseEvent) => {
+    e.currentTarget.classList.remove(...["bg-primary", "text-white"]);
+  };
 
   const handlerAddGroup = (select: TselectInputGroup) => {
-    setinputGroupParse((prev) => [select, ...prev]);
+    console.log(select);
+    if (select.name.length !== 0) {
+      setinputGroupParse((prev) => [select, ...prev]);
+      selectRef.current.value = select.name;
+      setSelectInputGroupParse({
+        id: select.id,
+        name: select.name,
+      });
+    } else alert("группа не выбрана");
   };
 
   const handlePressFind = (query: string) => {
@@ -34,17 +55,21 @@ function ParseMember() {
   };
 
   const handlerAddToList = () => {
-    dispatch(
-      addGroup({
-        groupName: selectInputGroupParse.name,
-        groupId: selectInputGroupParse.id,
-        screenName: "",
-        isLoading: false,
-        error: "",
-        type: "",
-        isClosed: false,
-      })
-    );
+    if (selectInputGroupParse.name) {
+      dispatch(
+        addGroup({
+          groupName: selectInputGroupParse.name,
+          groupId: selectInputGroupParse.id,
+          screenName: "",
+          isLoading: false,
+          error: "",
+          type: "",
+          isClosed: false,
+        })
+      );
+    } else {
+      alert("группа не выбрана");
+    }
   };
 
   useEffect(() => {
@@ -84,14 +109,13 @@ function ParseMember() {
           </div>
           <div className="col p-0 m-0 d-inline mt-3">
             <select
+              ref={selectRef}
               onChange={(e) => {
                 setSelectInputGroupParse({
                   id: Number(e.target.value),
                   name: e.target.options[e.target.selectedIndex].getAttribute(
                     "data-name"
                   ),
-                  dateEnd: "",
-                  dateStart: "",
                 });
               }}
               className="form-control form-control-sm d-inline-flex"
@@ -125,7 +149,17 @@ function ParseMember() {
           <div className="col m-2">
             <ul className="list-group">
               {listGroup.map((item) => (
-                <li className="list-group-item">A second item</li>
+                <li
+                  key={item.groupId}
+                  className="list-group-item"
+                  id={item.groupId}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handlerSelectGroup(item.groupId)}
+                  onMouseOver={(e) => handlerOverGroup(e)}
+                  onMouseLeave={(e) => handlerLeaveGroup(e)}
+                >
+                  {item.groupName}
+                </li>
               ))}
             </ul>
           </div>
@@ -134,6 +168,4 @@ function ParseMember() {
       </div>
     </>
   );
-}
-
-export default ParseMember;
+};

@@ -3,15 +3,21 @@ import { clearList } from "../../features/findDroupByIdSlice";
 import { useAppDispatch } from "../../hooks/hookStore";
 import { TselectInputGroup } from "../../models/stats";
 
+interface TselectGroup {
+  name: string;
+  id: number;
+  is_closed?: number;
+}
+
 interface propsFind {
   pressFind: (q: string) => void;
-  listFind: TselectInputGroup[];
-  addGroup: (select: { name: string; id: number }) => void;
+  listFind: TselectGroup[];
+  addGroup: (select: { name: string; id: number; is_closed: number }) => void;
 }
 
 export default function FindGroupsByID(props: propsFind) {
   const [q, setQ] = useState<string>("");
-  const [select, setSelect] = useState({ name: "", id: 0 });
+  const [select, setSelect] = useState({ name: "", id: 0, is_closed: 0 });
   const dispatch = useAppDispatch();
 
   const handleFind = () => {
@@ -19,7 +25,11 @@ export default function FindGroupsByID(props: propsFind) {
   };
 
   useEffect(() => {
-    setSelect({ name: props.listFind[0]?.name, id: props.listFind[0]?.id });
+    setSelect({
+      name: props.listFind[0]?.name,
+      id: props.listFind[0]?.id,
+      is_closed: props.listFind[0]?.is_closed,
+    });
   }, [props.listFind]);
 
   return (
@@ -83,6 +93,11 @@ export default function FindGroupsByID(props: propsFind) {
                       name: e.target.options[
                         e.target.selectedIndex
                       ].getAttribute("data-name-find"),
+                      is_closed: Number(
+                        e.target.options[e.target.selectedIndex].getAttribute(
+                          "data-closed"
+                        )
+                      ),
                     })
                   }
                 >
@@ -91,6 +106,7 @@ export default function FindGroupsByID(props: propsFind) {
                       key={item.id}
                       value={item.id}
                       data-name-find={item.name}
+                      data-closed={item.is_closed}
                     >
                       {item.name}
                     </option>
