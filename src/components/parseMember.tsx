@@ -6,7 +6,11 @@ import {
   getStatus,
   updateData,
 } from "../features/loginSlice";
-import { addGroup } from "../features/parseSlice";
+import {
+  addGroup,
+  getGroupInfoParse,
+  getParseMember,
+} from "../features/parseSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hookStore";
 import { TselectInputGroup } from "../models/stats";
 import FindGroupsByID from "./findGroup/FindGroupsByID";
@@ -23,8 +27,8 @@ export const ParseMember = () => {
   );
   const selectRef = useRef(null);
 
-  const handlerSelectGroup = (id) => {
-    alert(id);
+  const handlerSelectGroup = (idGroup) => {
+    dispatch(getParseMember({ id: idGroup, next_from: "" }));
   };
 
   const handlerOverGroup = (e: React.MouseEvent) => {
@@ -169,3 +173,6 @@ export const ParseMember = () => {
     </>
   );
 };
+function getGrouInfo(): any {
+  throw new Error("Function not implemented.");
+}

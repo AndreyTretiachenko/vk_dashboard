@@ -6,44 +6,48 @@ const initialState = {
   error: "",
 };
 
+const getMenber = async (id: number, next_from: string) => {
+  return await new Promise((resolve, reject) => {
+    let VK = window["VK"];
+    VK.Api.call(
+      "groups.getMembers",
+      {
+        group_id: id,
+        next_from: next_from,
+        v: "5.86",
+      },
+      (res) => {
+        resolve(res);
+      }
+    );
+  });
+};
+
 export const getParseMember = createAsyncThunk(
   "vk/getParse",
   async (settings: { id: number; next_from: string }, thunkApi) => {
     try {
-      return await new Promise((resolve, reject) => {
-        // @ts-ignore
-        VK.Api.call(
-          "groups.getMembers",
-          {
-            group_id: settings.id,
-            next_from: "",
-            v: "5.86",
-          },
-          (res) => {
-            resolve(res.response);
-          }
-        );
-      });
+      return;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
-export const getGroupInfo = createAsyncThunk(
+export const getGroupInfoParse = createAsyncThunk(
   "vk/getGrouoInfo",
   async (settings: { id: number }, thunkApi) => {
     try {
-      return await new Promise((resolve, reject) => {
-        // @ts-ignore
-        VK.Api.call(
+      return new Promise((resolve, reject) => {
+        let vk = window["VK"];
+        vk.Api.call(
           "groups.getById",
           {
             group_id: settings.id,
             v: "5.86",
           },
           (res) => {
-            resolve(res.response[0]);
+            resolve(res.response);
           }
         );
       });
@@ -81,8 +85,10 @@ export const parseSlice = createSlice({
         (state, action: PayloadAction<any>) => {}
       )
       .addCase(
-        getGroupInfo.fulfilled,
-        (state, action: PayloadAction<any>) => {}
+        getGroupInfoParse.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.groups = action.payload;
+        }
       );
   },
 });
