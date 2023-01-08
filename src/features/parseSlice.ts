@@ -6,18 +6,18 @@ const initialState = {
   error: "",
 };
 
-const getMenber = async (id: number, next_from: string) => {
-  return await new Promise((resolve, reject) => {
+const getMember = (id: number, offset: number) => {
+  return new Promise((resolve, reject) => {
     let VK = window["VK"];
     VK.Api.call(
-      "groups.getMembers",
+      "execute.getMembersCustom",
       {
         group_id: id,
-        next_from: next_from,
-        v: "5.86",
+        offset: offset,
+        v: "5.131",
       },
       (res) => {
-        resolve(res);
+        resolve(res.response);
       }
     );
   });
@@ -25,9 +25,30 @@ const getMenber = async (id: number, next_from: string) => {
 
 export const getParseMember = createAsyncThunk(
   "vk/getParse",
-  async (settings: { id: number; next_from: string }, thunkApi) => {
+  async (settings: { id: number }, thunkApi) => {
     try {
-      return;
+      await getMember(settings.id, 0).then((res: any) => {
+        if (res.total_count > res.offset) {
+          const count = Math.trunc(res.total_count / res.offset);
+          console.log(count);
+          let members = { data: [] };
+          let i = 1;
+          while (i <= count) {
+            // eslint-disable-next-line no-loop-func
+            getMember(settings.id, 24000 * i).then((r: any) => {
+              members = {
+                ...members,
+                data: [...members.data, ...r.data],
+              };
+            });
+            i++;
+          }
+          window["result"] = members;
+        } else {
+          window["result"] = res;
+        }
+      });
+      return window["result"];
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
