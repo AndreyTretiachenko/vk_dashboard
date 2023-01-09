@@ -27,7 +27,7 @@ export const getParseMember = createAsyncThunk(
   "vk/getParse",
   async (settings: { id: number }, thunkApi) => {
     try {
-      let settingData = { data: [], count: 0, total_count:0, offset:0};
+      let settingData = { data: [], count: 0, total_count:0, offset:0, id: 0};
       let membersAll = { data: [] }
       await getMember(settings.id, 0).then((res: any) => {
         const count = Math.trunc(res.total_count / res.offset);
@@ -35,7 +35,8 @@ export const getParseMember = createAsyncThunk(
           data: [...settingData.data, ...res.data],
           count: count,
           total_count: res.total_count,
-          offset: res.offset
+          offset: res.offset,
+          id: settings.id,
         }
         });
         
@@ -95,8 +96,10 @@ export const parseSlice = createSlice({
   name: "parseMember",
   initialState,
   reducers: {
-    addGroup: (state: any, action) => {
-      state.groups.push(action.payload);
+    addGroup: (state:any, action) => {
+      return {...state,
+        groups: [...state.groups, action.payload]
+      }
     },
     removeGroup: (state, action) => {
       return state.groups.filter((item) => {
@@ -112,18 +115,21 @@ export const parseSlice = createSlice({
       )
       .addCase(
         getParseMember.fulfilled,
-        (state, action: PayloadAction<any>) => {}
+        (state, action: PayloadAction<any>) => {
+          return {...state,
+            groups: [...state.groups].map((item) => {
+              if (item.groupId === action.payload.id) 
+                return {...item, memberList: action.payload.data}
+              else
+                return item  
+            })
+          }
+        }
       )
       .addCase(
         getParseMember.rejected,
         (state, action: PayloadAction<any>) => {}
       )
-      .addCase(
-        getGroupInfoParse.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.groups = action.payload;
-        }
-      );
   },
 });
 

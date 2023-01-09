@@ -1,30 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
-import { findGroup } from "../features/findDroupByIdSlice";
+import React, {useEffect, useRef, useState} from "react";
+import {findGroup} from "../features/findDroupByIdSlice";
 import {
   getDataUser,
   getLogin,
   getStatus,
   updateData,
 } from "../features/loginSlice";
-import { addGroup, getParseMember } from "../features/parseSlice";
-import { useAppDispatch, useAppSelector } from "../hooks/hookStore";
-import { TselectInputGroup } from "../models/stats";
+import {addGroup, getParseMember} from "../features/parseSlice";
+import {useAppDispatch, useAppSelector} from "../hooks/hookStore";
+import {TselectInputGroup} from "../models/stats";
 import FindGroupsByID from "./findGroup/FindGroupsByID";
 
 export const ParseMember = () => {
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.login);
-  const listGroup = useAppSelector((state) => state.parse.groups);
-  const findListGroup = useAppSelector((state) => state.search);
+  const {data} = useAppSelector(state => state.login);
+  const listGroup = useAppSelector(state => state.parse.groups);
+  const findListGroup = useAppSelector(state => state.search);
   const [inputGroupParse, setinputGroupParse] = useState([]);
-
   const [selectInputGroupParse, setSelectInputGroupParse] = useState(
     {} as TselectInputGroup
   );
   const selectRef = useRef(null);
 
-  const handlerSelectGroup = (idGroup) => {
-    dispatch(getParseMember({ id: idGroup }));
+  const handlerSelectGroup = idGroup => {
+    dispatch(getParseMember({id: idGroup}));
   };
 
   const handlerOverGroup = (e: React.MouseEvent) => {
@@ -37,7 +36,7 @@ export const ParseMember = () => {
   const handlerAddGroup = (select: TselectInputGroup) => {
     console.log(select);
     if (select.name.length !== 0) {
-      setinputGroupParse((prev) => [select, ...prev]);
+      setinputGroupParse(prev => [select, ...prev]);
       selectRef.current.value = select.name;
       setSelectInputGroupParse({
         id: select.id,
@@ -47,7 +46,7 @@ export const ParseMember = () => {
   };
 
   const handlePressFind = (query: string) => {
-    dispatch(findGroup({ q: query, offset: 0, count: 20 }));
+    dispatch(findGroup({q: query, offset: 0, count: 20}));
   };
 
   const handlerOAuthVK = () => {
@@ -75,11 +74,11 @@ export const ParseMember = () => {
   useEffect(() => {
     dispatch(getStatus())
       .then((res: any) => {
-        dispatch(getDataUser()).then((res) => {
+        dispatch(getDataUser()).then(res => {
           dispatch(updateData(res.payload[0]));
         });
       })
-      .catch((res) => {
+      .catch(res => {
         alert("авторизуйтесь пожалуйста");
       });
   }, []);
@@ -92,7 +91,7 @@ export const ParseMember = () => {
             <img
               alt=""
               src={data.photo}
-              style={{ border: "1px solid", borderRadius: "100px" }}
+              style={{border: "1px solid", borderRadius: "100px"}}
             />
             {data.id ? (
               <span className="m-2">
@@ -110,7 +109,7 @@ export const ParseMember = () => {
           <div className="col p-0 m-0 d-inline mt-3">
             <select
               ref={selectRef}
-              onChange={(e) => {
+              onChange={e => {
                 setSelectInputGroupParse({
                   id: Number(e.target.value),
                   name: e.target.options[e.target.selectedIndex].getAttribute(
@@ -119,10 +118,10 @@ export const ParseMember = () => {
                 });
               }}
               className="form-control form-control-sm d-inline-flex"
-              style={{ width: 400 }}
+              style={{width: 400}}
               aria-describedby="basic-addon3"
             >
-              {inputGroupParse.map((item) => (
+              {inputGroupParse.map(item => (
                 <option
                   key={item.id}
                   value={item.id}
@@ -148,17 +147,17 @@ export const ParseMember = () => {
         <div className="row">
           <div className="col m-2">
             <ul className="list-group">
-              {listGroup.map((item) => (
+              {listGroup?.map(item => (
                 <li
                   key={item.groupId}
                   className="list-group-item"
                   id={item.groupId}
-                  style={{ cursor: "pointer" }}
+                  style={{cursor: "pointer"}}
                   onClick={() => handlerSelectGroup(item.groupId)}
-                  onMouseOver={(e) => handlerOverGroup(e)}
-                  onMouseLeave={(e) => handlerLeaveGroup(e)}
+                  onMouseOver={e => handlerOverGroup(e)}
+                  onMouseLeave={e => handlerLeaveGroup(e)}
                 >
-                  {item.groupName}
+                  {item.groupName}, подписчики: {item?.memberList?.length}
                 </li>
               ))}
             </ul>
