@@ -27,33 +27,46 @@ export const getParseMember = createAsyncThunk(
   "vk/getParse",
   async (settings: { id: number }, thunkApi) => {
     try {
+      let settingData = { data: [], count: 0, total_count:0, offset:0};
+      let membersAll = { data: [] }
       await getMember(settings.id, 0).then((res: any) => {
-        if (res.total_count > res.offset) {
-          const count = Math.trunc(res.total_count / res.offset);
-          console.log(count);
-          let members = { data: [] };
+        const count = Math.trunc(res.total_count / res.offset);
+        settingData = {...settingData, 
+          data: [...settingData.data, ...res.data],
+          count: count,
+          total_count: res.total_count,
+          offset: res.offset
+        }
+        });
+        
+        if (settingData.count !==0 && settingData.total_count > settingData.offset) {
+          // eslint-disable-next-line no-loop-func
+          membersAll = {...settingData, data:[...membersAll.data, ...settingData.data]}
           let i = 1;
-          while (i <= count) {
+          while (i <= settingData.count) {
             // eslint-disable-next-line no-loop-func
-            getMember(settings.id, 24000 * i).then((r: any) => {
-              members = {
-                ...members,
-                data: [...members.data, ...r.data],
+            await getMember(settings.id, 24000 * i).then((res: any) => {
+              // eslint-disable-next-line no-loop-func
+              membersAll = {
+                ...membersAll,
+                data: [...membersAll.data, ...res.data],
               };
+
             });
             i++;
           }
-          window["result"] = members;
+          console.log(membersAll.data)
+          return membersAll;
         } else {
-          window["result"] = res;
+          return settingData;
         }
-      });
-      return window["result"];
-    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  }
-);
+        } catch(error: any) {
+          return thunkApi.rejectWithValue(error.message);
+        }
+      
+    
+  
+        });
 
 export const getGroupInfoParse = createAsyncThunk(
   "vk/getGrouoInfo",
