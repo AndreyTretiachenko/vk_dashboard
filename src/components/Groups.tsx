@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   getDataUser,
   getLogin,
   getStatus,
   updateData,
 } from "../features/loginSlice";
-import { getStats } from "../features/statSlice";
-import { useAppDispatch, useAppSelector } from "../hooks/hookStore";
+import {getStats} from "../features/statSlice";
+import {useAppDispatch, useAppSelector} from "../hooks/hookStore";
 import {
   LineChart,
   Line,
@@ -18,16 +18,16 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import { getGroupInfo } from "../features/membersSlice";
-import { TselectInputGroup } from "../models/stats";
-import { groupIDs } from "../data/groupsIDs";
-import { FafouriteButton } from "./favouriteButton/FafouriteButton";
+import {getGroupInfo} from "../features/membersSlice";
+import {TselectInputGroup} from "../models/stats";
+import {groupIDs} from "../data/groupsIDs";
+import {FafouriteButton} from "./favouriteButton/FafouriteButton";
 import {
   addFavouriteItem,
   updateFavouriteList,
 } from "../features/favouriteSlice";
 import FindGroupsByID from "./findGroup/FindGroupsByID";
-import { findGroup } from "../features/findDroupByIdSlice";
+import {findGroup} from "../features/findDroupByIdSlice";
 import ItemKpi from "./kpi/itemKpi";
 
 function Groups() {
@@ -38,11 +38,11 @@ function Groups() {
     dispatch(getLogin());
   };
 
-  const { data } = useAppSelector((state) => state.login);
-  const members = useAppSelector((state) => state.stats);
-  const response = useAppSelector((state) => state.stats);
-  const favouriteList = useAppSelector((state) => state.favourite.items);
-  const findListGroup = useAppSelector((state) => state.search);
+  const {data} = useAppSelector(state => state.login);
+  const members = useAppSelector(state => state.stats);
+  const response = useAppSelector(state => state.stats);
+  const favouriteList = useAppSelector(state => state.favourite.items);
+  const findListGroup = useAppSelector(state => state.search);
   const [favourite, setFavourite] = useState(false);
   const [inputGroup, setinputGroup] = useState<TselectInputGroup[]>([]);
   const [selectInputGroup, setSelectInputGroup] = useState(
@@ -50,28 +50,28 @@ function Groups() {
   );
 
   const handlerAddGroup = (select: TselectInputGroup) => {
-    setinputGroup((prev) => [select, ...prev]);
+    setinputGroup(prev => [select, ...prev]);
   };
 
   useEffect(() => {
     dispatch(getStatus())
       .then((res: any) => {
-        dispatch(getDataUser()).then((res) => {
+        dispatch(getDataUser()).then(res => {
           dispatch(updateData(res.payload[0]));
         });
       })
-      .catch((res) => {
+      .catch(res => {
         alert("авторизуйтесь пожалуйста");
       });
   }, []);
 
   const handlePressFind = (query: string) => {
-    dispatch(findGroup({ q: query, offset: 0, count: 20 }));
+    dispatch(findGroup({q: query, offset: 0, count: 20}));
   };
 
   const handlerToggleFavourite = () => {
     const find = favouriteList.find(
-      (items) => items.id === response.groups[0]?.id
+      items => items.id === response.groups[0]?.id
     )?.name;
     if (find === undefined) {
       dispatch(
@@ -101,7 +101,7 @@ function Groups() {
     if (favourite) setinputGroup(favouriteList);
     else
       setinputGroup(
-        groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
+        groupIDs.sort(({name: a}, {name: b}) => a.localeCompare(b))
       );
   }, [favourite, favouriteList]);
 
@@ -113,7 +113,7 @@ function Groups() {
             <img
               alt=""
               src={data.photo}
-              style={{ border: "1px solid", borderRadius: "100px" }}
+              style={{border: "1px solid", borderRadius: "100px"}}
             />
             {data.id ? (
               <span className="m-2">
@@ -137,7 +137,7 @@ function Groups() {
                   </span>
                 </div>
                 <select
-                  onChange={(e) => {
+                  onChange={e => {
                     setSelectInputGroup({
                       id: Number(e.target.value),
                       name: e.target.options[
@@ -145,12 +145,13 @@ function Groups() {
                       ].getAttribute("data-name"),
                       dateEnd: "",
                       dateStart: "",
+                      photo_100: "",
                     });
                   }}
                   className="form-control"
                   aria-describedby="basic-addon3"
                 >
-                  {inputGroup.map((item) => (
+                  {inputGroup.map(item => (
                     <option
                       key={item.id}
                       value={item.id}
@@ -178,7 +179,7 @@ function Groups() {
                   type="checkbox"
                   id="exampleCheck1"
                   checked={favourite}
-                  onChange={(e) => setFavourite(e.target.checked)}
+                  onChange={e => setFavourite(e.target.checked)}
                 />
                 <label
                   className="form-check-label  ml-2"
@@ -191,10 +192,10 @@ function Groups() {
                 <label className="d-inline pl-4 mx-1">период:</label>
                 <input
                   className="form-control d-inline"
-                  style={{ width: "20%" }}
+                  style={{width: "20%"}}
                   type="date"
                   value={selectInputGroup.dateStart}
-                  onChange={(e) =>
+                  onChange={e =>
                     setSelectInputGroup({
                       ...selectInputGroup,
                       dateStart: e.target.value,
@@ -204,10 +205,10 @@ function Groups() {
                 <span className="mx-3">-</span>
                 <input
                   className="form-control d-inline"
-                  style={{ width: "20%" }}
+                  style={{width: "20%"}}
                   type="date"
                   value={selectInputGroup.dateEnd}
-                  onChange={(e) =>
+                  onChange={e =>
                     setSelectInputGroup({
                       ...selectInputGroup,
                       dateEnd: e.target.value,
@@ -219,12 +220,12 @@ function Groups() {
           )}
         </div>
 
-        <div style={{ display: "inline-block", width: "100%" }}>
+        <div style={{display: "inline-block", width: "100%"}}>
           <div className="card">
             <div className="card-header text-center d-flex align-items-center">
               <div className="d-inline-flex mr-3 ">
                 Общая аналитика группы: &nbsp;
-                <span style={{ fontWeight: 500 }}>
+                <span style={{fontWeight: 500}}>
                   {response.isLoading
                     ? "загрузка ....."
                     : response.groups[0]?.name}
@@ -242,10 +243,7 @@ function Groups() {
 
             <div className="card-body">
               <h5 className="card-title">Показатели эффективности группы</h5>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"ERpost"}
                   value={
@@ -261,10 +259,7 @@ function Groups() {
                   fixed={2}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"ERview"}
                   value={
@@ -279,10 +274,7 @@ function Groups() {
                   fixed={2}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"LR (Love Rate)"}
                   value={
@@ -296,10 +288,7 @@ function Groups() {
                   fixed={2}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"TR (Talk Rate)"}
                   value={
@@ -313,10 +302,7 @@ function Groups() {
                   fixed={2}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Posts"}
                   value={response.items.length}
@@ -324,10 +310,7 @@ function Groups() {
                   fixed={0}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Likes"}
                   value={response.result.likes}
@@ -335,10 +318,7 @@ function Groups() {
                   fixed={0}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Comments"}
                   value={response.result.comments}
@@ -346,10 +326,7 @@ function Groups() {
                   fixed={0}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Reposts"}
                   value={response.result.reposts}
@@ -357,10 +334,7 @@ function Groups() {
                   fixed={0}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Members"}
                   value={response.groups[0]?.members_count}
@@ -368,10 +342,7 @@ function Groups() {
                   fixed={0}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"CTR"}
                   value={
@@ -385,10 +356,7 @@ function Groups() {
                   fixed={2}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Views"}
                   value={response.result.views}
@@ -396,10 +364,7 @@ function Groups() {
                   fixed={0}
                 />
               </div>
-              <div
-                className="card d-inline-flex m-1"
-                style={{ width: "250px" }}
-              >
+              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
                 <ItemKpi
                   name={"Views/Posts"}
                   value={response.result.views / response.items.length}
@@ -461,12 +426,12 @@ function Groups() {
                               a.views.count
                         )
                         .slice(0, 20)
-                        .filter((item) => item.attachments.length !== 0)
-                        .map((item) => (
+                        .filter(item => item.attachments.length !== 0)
+                        .map(item => (
                           <div
                             key={item.hash}
                             className="d-inline m-3"
-                            style={{ width: 300 }}
+                            style={{width: 300}}
                           >
                             <div className="card">
                               <div className="card-header d-flex">
@@ -479,7 +444,7 @@ function Groups() {
                                   new Array(
                                     new Set(
                                       [...item.attachments].map(
-                                        (i) => i.type + "; "
+                                        i => i.type + "; "
                                       )
                                     )
                                   )
@@ -517,13 +482,13 @@ function Groups() {
                                 </div>
                                 <div
                                   className="d-inline-flex "
-                                  style={{ width: "40%" }}
+                                  style={{width: "40%"}}
                                 >
                                   <a
                                     href={`https://vk.com/${response.groups[0]?.screen_name}?w=wall${item.from_id}_${item.id}`}
                                     target="blank"
                                     className="m-0 mr-3"
-                                    style={{ textAlign: "justify" }}
+                                    style={{textAlign: "justify"}}
                                   >
                                     {item.text.slice(0, 100)}...
                                   </a>
@@ -602,7 +567,7 @@ function Groups() {
                       width={1000}
                       height={500}
                       data={response.items
-                        .map((item) => {
+                        .map(item => {
                           return {
                             дата: new Intl.DateTimeFormat("ru", {
                               day: "2-digit",
@@ -667,7 +632,7 @@ function Groups() {
                       width={1000}
                       height={500}
                       data={response.items
-                        .map((item) => {
+                        .map(item => {
                           return {
                             дата: new Intl.DateTimeFormat("ru", {
                               day: "2-digit",

@@ -27,10 +27,10 @@ export const ParseMember = () => {
   };
 
   const handlerOverGroup = (e: React.MouseEvent) => {
-    e.currentTarget.classList.add(...["bg-primary", "text-white"]);
+    e.currentTarget.classList.add(...["bg-light", "text-dark"]);
   };
   const handlerLeaveGroup = (e: React.MouseEvent) => {
-    e.currentTarget.classList.remove(...["bg-primary", "text-white"]);
+    e.currentTarget.classList.remove(...["bg-light", "text-dark"]);
   };
 
   const handlerAddGroup = (select: TselectInputGroup) => {
@@ -41,6 +41,7 @@ export const ParseMember = () => {
       setSelectInputGroupParse({
         id: select.id,
         name: select.name,
+        photo_100: select.photo_100,
       });
     } else alert("группа не выбрана");
   };
@@ -63,9 +64,11 @@ export const ParseMember = () => {
           isLoading: false,
           error: "",
           type: "",
+          photo_100: selectInputGroupParse.photo_100,
           isClosed: false,
         })
       );
+      handlerSelectGroup(selectInputGroupParse.id);
     } else {
       alert("группа не выбрана");
     }
@@ -115,6 +118,10 @@ export const ParseMember = () => {
                   name: e.target.options[e.target.selectedIndex].getAttribute(
                     "data-name"
                   ),
+                  photo_100:
+                    e.target.options[e.target.selectedIndex].getAttribute(
+                      "photo-name"
+                    ),
                 });
               }}
               className="form-control form-control-sm d-inline-flex"
@@ -126,6 +133,7 @@ export const ParseMember = () => {
                   key={item.id}
                   value={item.id}
                   data-name={item.name.toString()}
+                  photo-name={item.photo_100}
                 >
                   {item.name.trim()}
                 </option>
@@ -152,17 +160,45 @@ export const ParseMember = () => {
                   key={item.groupId}
                   className="list-group-item"
                   id={item.groupId}
-                  style={{cursor: "pointer"}}
-                  onClick={() => handlerSelectGroup(item.groupId)}
                   onMouseOver={e => handlerOverGroup(e)}
                   onMouseLeave={e => handlerLeaveGroup(e)}
                 >
-                  {item.groupName}, подписчики: {item?.memberList?.length}
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-7">
+                        <img
+                          src={item.photo_100}
+                          width={50}
+                          height={50}
+                          className="mr-2"
+                        />
+                        {item.groupName}
+                      </div>
+                      <div className="col-5 d-inline">
+                        <button
+                          className="btn btn-sm btn-success d-inline mr-3"
+                          onClick={() => handlerSelectGroup(item.groupId)}
+                        >
+                          загрузить подписчиков
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger d-inline"
+                          onClick={() => {}}
+                        >
+                          скачать новых
+                        </button>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        подписчики: {item?.memberList?.length}
+                      </div>
+                    </div>
+                  </div>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="col m-2">Информация по группе</div>
         </div>
       </div>
     </>

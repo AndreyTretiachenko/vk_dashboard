@@ -167,6 +167,7 @@ export interface Tmembers {
 export interface TselectInputGroup {
   id?: number;
   name?: string;
+  photo_100: string;
   dateStart?: string;
   dateEnd?: string;
   isFavourite?: boolean;

@@ -27,7 +27,7 @@ export const getParseMember = createAsyncThunk(
   "vk/getParse",
   async (settings: { id: number }, thunkApi) => {
     try {
-      let settingData = { data: [], count: 0, total_count:0, offset:0, id: 0};
+      let settingData = { data: [], count: 0, total_count:0, offset:0, id: 0, photo_100:''};
       let membersAll = { data: [] }
       await getMember(settings.id, 0).then((res: any) => {
         const count = Math.trunc(res.total_count / res.offset);
@@ -37,6 +37,7 @@ export const getParseMember = createAsyncThunk(
           total_count: res.total_count,
           offset: res.offset,
           id: settings.id,
+          photo_100: res.photo_100,
         }
         });
         
@@ -116,13 +117,31 @@ export const parseSlice = createSlice({
       .addCase(
         getParseMember.fulfilled,
         (state, action: PayloadAction<any>) => {
-          return {...state,
-            groups: [...state.groups].map((item) => {
-              if (item.groupId === action.payload.id) 
-                return {...item, memberList: action.payload.data}
-              else
-                return item  
+          if (state.groups.length === 0) {
+            return {...state,
+              groups: [...state.groups].map((item) => {
+                if (item.groupId === action.payload.id) 
+                  return {...item, memberList: action.payload.data}
+                else
+                  return item  
+            
             })
+          }
+          } else {
+            return {...state,
+              
+              groups: [...state.groups].map((item) => {
+                if (item.groupId === action.payload.id) 
+                  return {...item, 
+                    newMembers: action.payload.data.filter(x => !item.memberList.includes(x)),
+                    memberList: action.payload.data,
+                    
+                  }
+                else
+                  return item  
+            
+            })
+          }
           }
         }
       )

@@ -1,23 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { clearList } from "../../features/findDroupByIdSlice";
-import { useAppDispatch } from "../../hooks/hookStore";
-import { TselectInputGroup } from "../../models/stats";
+import React, {useEffect, useState} from "react";
+import {clearList} from "../../features/findDroupByIdSlice";
+import {useAppDispatch} from "../../hooks/hookStore";
+import {TselectInputGroup} from "../../models/stats";
 
 interface TselectGroup {
   name: string;
   id: number;
   is_closed?: number;
+  photo_100?: string;
 }
 
 interface propsFind {
   pressFind: (q: string) => void;
   listFind: TselectGroup[];
-  addGroup: (select: { name: string; id: number; is_closed: number }) => void;
+  addGroup: (select: {
+    name: string;
+    id: number;
+    is_closed: number;
+    photo_100: string;
+  }) => void;
 }
 
 export default function FindGroupsByID(props: propsFind) {
   const [q, setQ] = useState<string>("");
-  const [select, setSelect] = useState({ name: "", id: 0, is_closed: 0 });
+  const [select, setSelect] = useState({
+    name: "",
+    id: 0,
+    is_closed: 0,
+    photo_100: "",
+  });
   const dispatch = useAppDispatch();
 
   const handleFind = () => {
@@ -29,6 +40,7 @@ export default function FindGroupsByID(props: propsFind) {
       name: props.listFind[0]?.name,
       id: props.listFind[0]?.id,
       is_closed: props.listFind[0]?.is_closed,
+      photo_100: props.listFind[0]?.photo_100,
     });
   }, [props.listFind]);
 
@@ -71,7 +83,7 @@ export default function FindGroupsByID(props: propsFind) {
                 <input
                   name="inputFind"
                   value={q}
-                  onChange={(e) => setQ(e.target.value)}
+                  onChange={e => setQ(e.target.value)}
                   className="form-control form-control-sm d-inline w-75 mr-3"
                   type={"text"}
                 />
@@ -87,7 +99,7 @@ export default function FindGroupsByID(props: propsFind) {
                 <select
                   name="selectFind"
                   className="form-control form-control-sm"
-                  onChange={(e) =>
+                  onChange={e =>
                     setSelect({
                       id: Number(e.target.value),
                       name: e.target.options[
@@ -98,6 +110,10 @@ export default function FindGroupsByID(props: propsFind) {
                           "data-closed"
                         )
                       ),
+                      photo_100:
+                        e.target.options[e.target.selectedIndex].getAttribute(
+                          "photo-name"
+                        ),
                     })
                   }
                 >
@@ -107,6 +123,7 @@ export default function FindGroupsByID(props: propsFind) {
                       value={item.id}
                       data-name-find={item.name}
                       data-closed={item.is_closed}
+                      photo-name={item.photo_100}
                     >
                       {item.name}
                     </option>
