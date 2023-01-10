@@ -114,11 +114,13 @@ export const parseSlice = createSlice({
         groups: [...state.groups, action.payload]
       }
     },
-    removeGroup: (state, action) => {
-      return state.groups.filter((item) => {
-        return item.groupId !== action.payload.id;
-      });
-    },
+    removeGroup: (state:any, action) => {
+      return {...state,
+        groups: [...state.groups].filter((item) => {
+        return item.groupId !== action.payload;
+      })
+      }
+    }
   },
   extraReducers(builder) {
     builder

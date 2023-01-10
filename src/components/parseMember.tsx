@@ -6,7 +6,7 @@ import {
   getStatus,
   updateData,
 } from "../features/loginSlice";
-import {addGroup, getParseMember} from "../features/parseSlice";
+import {addGroup, getParseMember, removeGroup} from "../features/parseSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/hookStore";
 import {TselectInputGroup} from "../models/stats";
 import FindGroupsByID from "./findGroup/FindGroupsByID";
@@ -221,7 +221,7 @@ export const ParseMember = () => {
                           загрузить подписчиков
                         </button>
                         <button
-                          className="btn btn-sm btn-danger d-inline"
+                          className="btn btn-sm btn-success d-inline"
                           onClick={() =>
                             exportNewUser(
                               item.newMembers,
@@ -230,6 +230,12 @@ export const ParseMember = () => {
                           }
                         >
                           скачать новых
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger d-inline ml-2"
+                          onClick={() => dispatch(removeGroup(item.groupId))}
+                        >
+                          удалить
                         </button>
                       </div>
                     </div>
