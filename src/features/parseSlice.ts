@@ -57,7 +57,7 @@ export const getParseMember = createAsyncThunk(
             });
             i++;
           }
-          console.log(membersAll.data)
+          console.log(membersAll)
           return membersAll;
         } else {
           return settingData;
@@ -120,14 +120,17 @@ export const parseSlice = createSlice({
           
             return {...state,
               groups: [...state.groups].map((item) => {
+                console.log('123')
                 if (item.groupId === action.payload.id) 
                  if (!item.memberList) 
                   return {...item, 
-                    memberList: action.payload.data}
+                    memberList: action.payload.data,
+                    memberUpdate: new Date(Date.now()).toLocaleDateString('ru') + ' ' + new Date(Date.now()).toLocaleTimeString('ru')
+                  }
                   else
                   return {...item, 
-                    newMembers: action.payload.data.filter(x => !item.memberList?.includes(x)),
-                    memberList: action.payload.data,
+                    newMembers: action.payload.data.filter((x:any) => !item.memberList?.includes(x)),
+                    memberUpdate: new Date(Date.now()).toLocaleDateString('ru') + ' ' + new Date(Date.now()).toLocaleTimeString('ru')
                   }
                 else
                   return item  

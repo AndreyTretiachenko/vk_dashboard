@@ -1,6 +1,3 @@
-https://oauth.vk.com/authorize?client_id=51497328&display=page&redirect_uri=http://localhost:3000/callback-vk&scope=video,groups,offline,stats,stories&response_type=token&v=5.86
-
-vk1.a.35k7vdnZtgzEwhGvjq_Ansf9CZcMGaFemThU7MtcwnENFl5FT_FBG2k57dZpdLpaG-vyukFB7KRS3f88w-KfnDrmbZBBgj7pL392-DOKnFH_4KjHQuIthtqUkDib6lUoH624fOzRDF_i97Cy2No4-v6Gv2q3N_5uxDxyh2la_4p7FGGMqFXh4yPMegpEyJ7SCY5mpDgn61gUyB8IFSL2Mw
 
 
 

@@ -22,7 +22,17 @@ export const ParseMember = () => {
   );
   const selectRef = useRef(null);
 
-  const handlerSelectGroup = idGroup => {
+  const exportNewUser = newUser => {
+    const fileData = JSON.stringify(newUser);
+    const blob = new Blob([fileData], {type: "text/plain"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = "newUser.txt";
+    link.href = url;
+    link.click();
+  };
+
+  const handlerSelectGroup = (idGroup: number) => {
     dispatch(getParseMember({id: idGroup}));
   };
 
@@ -34,7 +44,6 @@ export const ParseMember = () => {
   };
 
   const handlerAddGroup = (select: TselectInputGroup) => {
-    console.log(select);
     if (select.name.length !== 0) {
       setinputGroupParse(prev => [select, ...prev]);
       selectRef.current.value = select.name;
@@ -177,13 +186,15 @@ export const ParseMember = () => {
                       <div className="col-5 d-inline">
                         <button
                           className="btn btn-sm btn-success d-inline mr-3"
-                          onClick={() => handlerSelectGroup(item.groupId)}
+                          onClick={() =>
+                            handlerSelectGroup(Number(item.groupId))
+                          }
                         >
                           загрузить подписчиков
                         </button>
                         <button
                           className="btn btn-sm btn-danger d-inline"
-                          onClick={() => {}}
+                          onClick={() => exportNewUser(item.newMembers)}
                         >
                           скачать новых
                         </button>
@@ -191,7 +202,9 @@ export const ParseMember = () => {
                     </div>
                     <div className="row">
                       <div className="col">
-                        подписчики: {item?.memberList?.length}
+                        подписчики: {item?.memberList?.length} (
+                        {item?.memberUpdate}), новые подписчики:{" "}
+                        {item.newMembers?.length}
                       </div>
                     </div>
                   </div>
