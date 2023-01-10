@@ -11,7 +11,7 @@ export const findGroup = createAsyncThunk(
           {
             q: settings.q,
             count: settings.count,
-            sort:6,
+            sort:0,
             v: "5.86",
           },
           (res) => {

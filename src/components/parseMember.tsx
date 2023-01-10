@@ -66,7 +66,7 @@ export const ParseMember = () => {
   };
 
   const handlePressFind = (query: string) => {
-    dispatch(findGroup({q: query, offset: 0, count: 20}));
+    dispatch(findGroup({q: query, offset: 0, count: 300}));
   };
 
   const handlerOAuthVK = () => {
