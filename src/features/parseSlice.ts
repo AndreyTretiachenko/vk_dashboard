@@ -25,14 +25,15 @@ const getMember = (id: number, offset: number) => {
 
 export const getParseMember = createAsyncThunk(
   "vk/getParse",
-  async (settings: { id: number }, thunkApi) => {
+  async (settings: { id: number , memberList: any}, thunkApi) => {
     try {
-      let settingData = { data: [], count: 0, total_count:0, offset:0, id: 0, photo_100:''};
+      let settingData = { data: [], count: 0, total_count:0, offset:0, id: 0, photo_100:'', membersListOld:[]};
       let membersAll = { data: [] }
       await getMember(settings.id, 0).then((res: any) => {
         const count = Math.trunc(res.total_count / res.offset);
         settingData = {...settingData, 
           data: [...settingData.data, ...res.data],
+          membersListOld: settings.memberList,
           count: count,
           total_count: res.total_count,
           offset: res.offset,
@@ -57,10 +58,21 @@ export const getParseMember = createAsyncThunk(
             });
             i++;
           }
-          console.log(membersAll)
-          return membersAll;
+          if (settingData.membersListOld.length !== 0)
+          return {...membersAll,
+            newMembers: membersAll.data.filter(x => !settingData.membersListOld.includes(x))
+          
+          };
+          else 
+          return membersAll
         } else {
-          return settingData;
+          if (settingData.membersListOld.length !== 0)
+          return {...settingData,
+            newMembers: settingData.data.filter(x => !settingData.membersListOld.includes(x))
+          
+          };
+          else
+          return settingData
         }
         } catch(error: any) {
           return thunkApi.rejectWithValue(error.message);
@@ -120,16 +132,10 @@ export const parseSlice = createSlice({
           
             return {...state,
               groups: [...state.groups].map((item) => {
-                console.log('123')
                 if (item.groupId === action.payload.id) 
-                 if (!item.memberList) 
                   return {...item, 
                     memberList: action.payload.data,
-                    memberUpdate: new Date(Date.now()).toLocaleDateString('ru') + ' ' + new Date(Date.now()).toLocaleTimeString('ru')
-                  }
-                  else
-                  return {...item, 
-                    newMembers: action.payload.data.filter((x:any) => !item.memberList?.includes(x)),
+                    newMembers: action.payload.newMembers,
                     memberUpdate: new Date(Date.now()).toLocaleDateString('ru') + ' ' + new Date(Date.now()).toLocaleTimeString('ru')
                   }
                 else

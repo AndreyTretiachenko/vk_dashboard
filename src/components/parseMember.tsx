@@ -22,18 +22,28 @@ export const ParseMember = () => {
   );
   const selectRef = useRef(null);
 
-  const exportNewUser = newUser => {
-    const fileData = JSON.stringify(newUser);
-    const blob = new Blob([fileData], {type: "text/plain"});
+  const exportNewUser = (newUser, fileName) => {
+    console.log(newUser.toString());
+    const fileData = newUser
+      .map(item => {
+        return item.replaceAll(",", "") + "\n";
+      })
+      .toString()
+      .replaceAll(",", "");
+
+    console.log(fileData);
+    const blob = new Blob([fileData], {
+      type: "text/plain",
+    });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.download = "newUser.txt";
+    link.download = fileName + ".txt";
     link.href = url;
     link.click();
   };
 
-  const handlerSelectGroup = (idGroup: number) => {
-    dispatch(getParseMember({id: idGroup}));
+  const handlerSelectGroup = (idGroup: number, memberList: any) => {
+    dispatch(getParseMember({id: idGroup, memberList: memberList}));
   };
 
   const handlerOverGroup = (e: React.MouseEvent) => {
@@ -77,7 +87,7 @@ export const ParseMember = () => {
           isClosed: false,
         })
       );
-      handlerSelectGroup(selectInputGroupParse.id);
+      handlerSelectGroup(selectInputGroupParse.id, []);
     } else {
       alert("группа не выбрана");
     }
@@ -159,6 +169,19 @@ export const ParseMember = () => {
             >
               добавить в список
             </button>
+            <button
+              className="btn btn-sm btn-danger d-inline"
+              onClick={() => {
+                let list = [];
+                listGroup.map((item: any) => {
+                  list = [...list, ...item.newMembers];
+                  list.map(item => item.replace(",", ""));
+                });
+                exportNewUser(list, "all");
+              }}
+            >
+              скачать новых
+            </button>
           </div>
         </div>
         <div className="row">
@@ -187,14 +210,22 @@ export const ParseMember = () => {
                         <button
                           className="btn btn-sm btn-success d-inline mr-3"
                           onClick={() =>
-                            handlerSelectGroup(Number(item.groupId))
+                            handlerSelectGroup(
+                              Number(item.groupId),
+                              item.memberList
+                            )
                           }
                         >
                           загрузить подписчиков
                         </button>
                         <button
                           className="btn btn-sm btn-danger d-inline"
-                          onClick={() => exportNewUser(item.newMembers)}
+                          onClick={() =>
+                            exportNewUser(
+                              item.newMembers,
+                              item.groupId + " " + item.memberUpdate
+                            )
+                          }
                         >
                           скачать новых
                         </button>
