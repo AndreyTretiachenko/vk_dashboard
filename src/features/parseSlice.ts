@@ -117,31 +117,22 @@ export const parseSlice = createSlice({
       .addCase(
         getParseMember.fulfilled,
         (state, action: PayloadAction<any>) => {
-          if (state.groups.length === 0) {
+          
             return {...state,
               groups: [...state.groups].map((item) => {
                 if (item.groupId === action.payload.id) 
-                  return {...item, memberList: action.payload.data}
-                else
-                  return item  
-            
-            })
-          }
-          } else {
-            return {...state,
-              
-              groups: [...state.groups].map((item) => {
-                if (item.groupId === action.payload.id) 
+                 if (!item.memberList) 
                   return {...item, 
-                    newMembers: action.payload.data.filter(x => !item.memberList.includes(x)),
+                    memberList: action.payload.data}
+                  else
+                  return {...item, 
+                    newMembers: action.payload.data.filter(x => !item.memberList?.includes(x)),
                     memberList: action.payload.data,
-                    
                   }
                 else
                   return item  
             
             })
-          }
           }
         }
       )
