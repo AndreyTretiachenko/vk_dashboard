@@ -109,7 +109,7 @@ export const ParseMember = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-3 p-0 m-0 mt-2">
+          <div className="col-3 mt-2 ml-2">
             <img
               alt=""
               src={data.photo}
@@ -128,7 +128,7 @@ export const ParseMember = () => {
               </button>
             )}
           </div>
-          <div className="col p-0 m-0 d-inline mt-3">
+          <div className="col  d-inline mt-3">
             <select
               ref={selectRef}
               onChange={e => {
@@ -165,7 +165,7 @@ export const ParseMember = () => {
             />
             <button
               onClick={handlerAddToList}
-              className="btn btn-sm btn-primary ml-2"
+              className="btn btn-sm btn-primary ml-2 mr-2"
             >
               добавить в список
             </button>
@@ -174,13 +174,15 @@ export const ParseMember = () => {
               onClick={() => {
                 let list = [];
                 listGroup.map((item: any) => {
-                  list = [...list, ...item.newMembers];
-                  list.map(item => item.replace(",", ""));
+                  if (item.newMembers) {
+                    list = [...list, ...item?.newMembers];
+                    list.map(item => item.replace(",", ""));
+                  }
                 });
                 exportNewUser(list, "all");
               }}
             >
-              скачать новых
+              скачать всё
             </button>
           </div>
         </div>
@@ -233,8 +235,8 @@ export const ParseMember = () => {
                     </div>
                     <div className="row">
                       <div className="col">
-                        подписчики: {item?.memberList?.length} (
-                        {item?.memberUpdate}), новые подписчики:{" "}
+                        подписчики: {item?.memberList?.length ?? "скрыты"} (
+                        {item?.memberUpdate ?? "нет даты"}), новые подписчики:{" "}
                         {item.newMembers?.length}
                       </div>
                     </div>
