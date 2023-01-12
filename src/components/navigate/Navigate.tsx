@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useEffect, useState} from "react";
 import {groupIDs} from "../../data/groupsIDs";
 import {findGroup} from "../../features/findDroupByIdSlice";
 import {getLogin} from "../../features/loginSlice";
@@ -16,6 +16,7 @@ export const Navigate = () => {
   );
   const findListGroup = useAppSelector(state => state.search);
   const [favourite, setFavourite] = useState(false);
+  const favouriteList = useAppSelector(state => state.favourite.items);
 
   const handlerOAuthVK = () => {
     dispatch(getLogin());
@@ -40,6 +41,14 @@ export const Navigate = () => {
       })
     );
   };
+
+  useEffect(() => {
+    if (favourite) setinputGroup(favouriteList);
+    else
+      setinputGroup(
+        groupIDs.sort(({name: a}, {name: b}) => a.localeCompare(b))
+      );
+  }, [favourite, favouriteList]);
 
   return (
     <>
