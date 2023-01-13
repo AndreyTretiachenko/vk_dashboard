@@ -30,7 +30,7 @@ export const Analytic = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container-fluid p-0">
         <div style={{display: "inline-block", width: "100%"}}>
           <div className="card">
             <div className="card-header text-center d-flex align-items-center">
