@@ -53,29 +53,28 @@ export const Navigate = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
-          <div>
-            <img
-              alt=""
-              src={data.photo}
-              style={{border: "1px solid", borderRadius: "100px"}}
-            />
-            {data.id ? (
-              <span className="m-2 h6">
-                {data.first_name} {data.last_name}
-              </span>
-            ) : (
-              <button
-                className="btn btn-sm btn-primary m-2"
-                onClick={handlerOAuthVK}
-              >
-                Войти
-              </button>
-            )}
-          </div>
-        </a>
+        <div className="mx-2 my-2">
+          <img
+            alt=""
+            src={data.photo}
+            style={{border: "1px solid", borderRadius: "100px"}}
+          />
+          {data.id ? (
+            <span className="m-2 h6">
+              {data.first_name} {data.last_name}
+            </span>
+          ) : (
+            <button
+              className="btn btn-sm btn-primary m-2"
+              onClick={handlerOAuthVK}
+            >
+              Войти
+            </button>
+          )}
+        </div>
+
         <button
-          className="navbar-toggler"
+          className="navbar-toggler mx-2"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
@@ -95,10 +94,10 @@ export const Navigate = () => {
                       <div className="row">
                         <div
                           className="col-12 col-md-6 col-lg-6"
-                          style={{border: "1px solid"}}
+                          // style={{border: "1px solid"}}
                         >
                           <div className="row">
-                            <div className="col-12">
+                            <div className="col-12 my-1">
                               <div className="input-group">
                                 <select
                                   onChange={e => {
@@ -115,7 +114,9 @@ export const Navigate = () => {
                                   className="form-control"
                                   aria-describedby="basic-addon3"
                                 >
-                                  <option selected>Выберите...</option>
+                                  <option selected>
+                                    Выберите группу ВК...
+                                  </option>
                                   {inputGroup.map(item => (
                                     <option
                                       key={item.id}
@@ -130,59 +131,96 @@ export const Navigate = () => {
                             </div>
                           </div>
                           <div className="row">
-                            <div className="col-12">
-                              <input
-                                type="checkbox"
-                                id="exampleCheck1"
-                                checked={favourite}
-                                onChange={e => setFavourite(e.target.checked)}
-                              />
-                              <label className="" htmlFor="exampleCheck1">
-                                избранное
-                              </label>
-                              <FindGroupsByID
-                                pressFind={handlePressFind}
-                                listFind={findListGroup.search}
-                                addGroup={handlerAddGroup}
-                              />
+                            <div className="col-12 my-2">
+                              <div className="float-start mb-2">
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="exampleCheck1"
+                                    checked={favourite}
+                                    onChange={e =>
+                                      setFavourite(e.target.checked)
+                                    }
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="exampleCheck1"
+                                  >
+                                    избранное
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="float-end">
+                                <FindGroupsByID
+                                  pressFind={handlePressFind}
+                                  listFind={findListGroup.search}
+                                  addGroup={handlerAddGroup}
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
                         <div
-                          className="col-12 col-md-6 col-lg-6"
-                          style={{border: "1px solid"}}
+                          className="col-12 col-md-6 col-lg-6 "
+                          // style={{border: "1px solid"}}
                         >
-                          <button className="" onClick={handlerGetStatGroup}>
-                            Загрузить аналитику
-                          </button>
-
-                          <div>
-                            <label className="">период:</label>
-                            <input
-                              className=""
-                              style={{width: "20%"}}
-                              type="date"
-                              value={selectInputGroup.dateStart}
-                              onChange={e =>
-                                setSelectInputGroup({
-                                  ...selectInputGroup,
-                                  dateStart: e.target.value,
-                                })
-                              }
-                            />
-                            <span className="mx-3">-</span>
-                            <input
-                              className=""
-                              style={{width: "20%"}}
-                              type="date"
-                              value={selectInputGroup.dateEnd}
-                              onChange={e =>
-                                setSelectInputGroup({
-                                  ...selectInputGroup,
-                                  dateEnd: e.target.value,
-                                })
-                              }
-                            />
+                          <div className="row">
+                            <div className="col-12 d-flex">
+                              <input
+                                className="form-control"
+                                style={{width: "auto"}}
+                                type="date"
+                                value={selectInputGroup.dateStart}
+                                defaultValue={
+                                  new Date(Date.now())
+                                    .getFullYear()
+                                    .toString() +
+                                  "-" +
+                                  "01" +
+                                  "-" +
+                                  "01"
+                                }
+                                onChange={e =>
+                                  setSelectInputGroup({
+                                    ...selectInputGroup,
+                                    dateStart: e.target.value,
+                                  })
+                                }
+                              />
+                              <span className="mx-1">по:</span>
+                              <input
+                                className="d-inline"
+                                style={{width: "auto"}}
+                                type="date"
+                                value={selectInputGroup.dateEnd}
+                                defaultValue={
+                                  new Date(Date.now())
+                                    .getFullYear()
+                                    .toString() +
+                                  "-" +
+                                  "01" +
+                                  "-" +
+                                  "29"
+                                }
+                                onChange={e =>
+                                  setSelectInputGroup({
+                                    ...selectInputGroup,
+                                    dateEnd: e.target.value,
+                                  })
+                                }
+                              />
+                            </div>
+                            <div className="col-12">
+                              <div className="">
+                                <button
+                                  className="btn btn-primary btn-sm"
+                                  onClick={handlerGetStatGroup}
+                                >
+                                  Загрузить аналитику
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

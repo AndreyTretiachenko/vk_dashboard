@@ -34,8 +34,8 @@ export const Analytic = () => {
         <div style={{display: "inline-block", width: "100%"}}>
           <div className="card">
             <div className="card-header text-center d-flex align-items-center">
-              <div className="d-inline-flex mr-3 ">
-                Общая аналитика группы: &nbsp;
+              <div className="d-inline-flex mr-3">
+                аналитика: &nbsp;
                 <span style={{fontWeight: 500}}>
                   {response.isLoading
                     ? "загрузка ....."
@@ -44,17 +44,17 @@ export const Analytic = () => {
               </div>
               {response.count > 0 && (
                 <>
-                  <FafouriteButton
+                  {/* <FafouriteButton
                     id={response.groups[0]?.id}
                     clickFavourite={handlerToggleFavourite}
-                  />
+                  /> */}
                 </>
               )}
             </div>
 
             <div className="card-body">
               <h5 className="card-title">Показатели эффективности группы</h5>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"ERpost"}
                   value={
@@ -67,10 +67,10 @@ export const Analytic = () => {
                   }
                   endpoint={"%"}
                   reference={2}
-                  fixed={2}
+                  fixed={1}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"ERview"}
                   value={
@@ -82,10 +82,10 @@ export const Analytic = () => {
                   }
                   endpoint={"%"}
                   reference={1}
-                  fixed={2}
+                  fixed={1}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"LR (Love Rate)"}
                   value={
@@ -96,10 +96,10 @@ export const Analytic = () => {
                   }
                   endpoint={"%"}
                   reference={1}
-                  fixed={2}
+                  fixed={1}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"TR (Talk Rate)"}
                   value={
@@ -113,7 +113,7 @@ export const Analytic = () => {
                   fixed={2}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Posts"}
                   value={response.items.length}
@@ -121,7 +121,7 @@ export const Analytic = () => {
                   fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Likes"}
                   value={response.result.likes}
@@ -129,7 +129,7 @@ export const Analytic = () => {
                   fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Comments"}
                   value={response.result.comments}
@@ -137,7 +137,7 @@ export const Analytic = () => {
                   fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Reposts"}
                   value={response.result.reposts}
@@ -145,7 +145,7 @@ export const Analytic = () => {
                   fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Members"}
                   value={response.groups[0]?.members_count}
@@ -153,7 +153,7 @@ export const Analytic = () => {
                   fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"CTR"}
                   value={
@@ -164,10 +164,10 @@ export const Analytic = () => {
                   }
                   endpoint={"%"}
                   reference={10}
-                  fixed={2}
+                  fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Views"}
                   value={response.result.views}
@@ -175,7 +175,7 @@ export const Analytic = () => {
                   fixed={0}
                 />
               </div>
-              <div className="card d-inline-flex m-1" style={{width: "250px"}}>
+              <div className="card d-inline-flex m-1" style={{width: "170px"}}>
                 <ItemKpi
                   name={"Views/Posts"}
                   value={response.result.views / response.items.length}
@@ -189,6 +189,7 @@ export const Analytic = () => {
                   ERpost = (лайки+репосты+комментарии)/кол-во подписчиков.
                   Референс - от 2% хороший реультат
                 </li>
+                s
                 <li>
                   ERview = (лайки+репосты+комментарии)/кол-во просмотров
                   публикации. Референс - от 1% хороший реультат
