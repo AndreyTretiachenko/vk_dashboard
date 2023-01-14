@@ -1,33 +1,33 @@
-import {useEffect, useState} from "react";
-import {groupIDs} from "../../data/groupsIDs";
-import {findGroup} from "../../features/findDroupByIdSlice";
-import {getLogin} from "../../features/loginSlice";
-import {getStats} from "../../features/statSlice";
-import {useAppDispatch, useAppSelector} from "../../hooks/hookStore";
-import {TselectInputGroup} from "../../models/stats";
+import { useEffect, useState } from "react";
+import { groupIDs } from "../../data/groupsIDs";
+import { findGroup } from "../../features/findDroupByIdSlice";
+import { getLogin } from "../../features/loginSlice";
+import { getStats } from "../../features/statSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hookStore";
+import { TselectInputGroup } from "../../models/stats";
 import FindGroupsByID from "../findGroup/FindGroupsByID";
 
 export const Navigate = () => {
   const dispatch = useAppDispatch();
-  const {data} = useAppSelector(state => state.login);
+  const { data } = useAppSelector((state) => state.login);
   const [inputGroup, setinputGroup] = useState<TselectInputGroup[]>([]);
   const [selectInputGroup, setSelectInputGroup] = useState(
     groupIDs[0] as TselectInputGroup
   );
-  const findListGroup = useAppSelector(state => state.search);
+  const findListGroup = useAppSelector((state) => state.search);
   const [favourite, setFavourite] = useState(false);
-  const favouriteList = useAppSelector(state => state.favourite.items);
+  const favouriteList = useAppSelector((state) => state.favourite.items);
 
   const handlerOAuthVK = () => {
     dispatch(getLogin());
   };
 
   const handlePressFind = (query: string) => {
-    dispatch(findGroup({q: query, offset: 0, count: 20}));
+    dispatch(findGroup({ q: query, offset: 0, count: 20 }));
   };
 
   const handlerAddGroup = (select: TselectInputGroup) => {
-    setinputGroup(prev => [select, ...prev]);
+    setinputGroup((prev) => [select, ...prev]);
   };
 
   const handlerGetStatGroup = () => {
@@ -46,7 +46,7 @@ export const Navigate = () => {
     if (favourite) setinputGroup(favouriteList);
     else
       setinputGroup(
-        groupIDs.sort(({name: a}, {name: b}) => a.localeCompare(b))
+        groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
       );
   }, [favourite, favouriteList]);
 
@@ -57,7 +57,7 @@ export const Navigate = () => {
           <img
             alt=""
             src={data.photo}
-            style={{border: "1px solid", borderRadius: "100px"}}
+            style={{ border: "1px solid", borderRadius: "100px" }}
           />
           {data.id ? (
             <span className="m-2 h6">
@@ -100,7 +100,7 @@ export const Navigate = () => {
                             <div className="col-12 my-1">
                               <div className="input-group">
                                 <select
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     setSelectInputGroup({
                                       id: Number(e.target.value),
                                       name: e.target.options[
@@ -117,7 +117,7 @@ export const Navigate = () => {
                                   <option selected>
                                     Выберите группу ВК...
                                   </option>
-                                  {inputGroup.map(item => (
+                                  {inputGroup.map((item) => (
                                     <option
                                       key={item.id}
                                       value={item.id}
@@ -131,7 +131,7 @@ export const Navigate = () => {
                             </div>
                           </div>
                           <div className="row">
-                            <div className="col-12 my-2">
+                            <div className="col-12 my-1">
                               <div className="float-start mb-2">
                                 <div className="form-check">
                                   <input
@@ -139,7 +139,7 @@ export const Navigate = () => {
                                     type="checkbox"
                                     id="exampleCheck1"
                                     checked={favourite}
-                                    onChange={e =>
+                                    onChange={(e) =>
                                       setFavourite(e.target.checked)
                                     }
                                   />
@@ -168,42 +168,32 @@ export const Navigate = () => {
                           <div className="row">
                             <div className="col-12 d-flex">
                               <input
-                                className="form-control"
-                                style={{width: "auto"}}
+                                className="form-control d-inline"
+                                style={{ width: "auto" }}
                                 type="date"
                                 value={selectInputGroup.dateStart}
-                                defaultValue={
-                                  new Date(Date.now())
-                                    .getFullYear()
-                                    .toString() +
-                                  "-" +
-                                  "01" +
-                                  "-" +
-                                  "01"
-                                }
-                                onChange={e =>
+                                defaultValue={new Date(
+                                  Date.now()
+                                ).toLocaleDateString("en-CA")}
+                                onChange={(e) =>
                                   setSelectInputGroup({
                                     ...selectInputGroup,
                                     dateStart: e.target.value,
                                   })
                                 }
                               />
-                              <span className="mx-1">по:</span>
+                              <span className="mx-1 d-flex align-items-center">
+                                по:
+                              </span>
                               <input
-                                className="d-inline"
-                                style={{width: "auto"}}
+                                className="form-control d-inline"
+                                style={{ width: "auto" }}
                                 type="date"
                                 value={selectInputGroup.dateEnd}
-                                defaultValue={
-                                  new Date(Date.now())
-                                    .getFullYear()
-                                    .toString() +
-                                  "-" +
-                                  "01" +
-                                  "-" +
-                                  "29"
-                                }
-                                onChange={e =>
+                                defaultValue={new Date(
+                                  Date.now()
+                                ).toLocaleDateString("en-CA")}
+                                onChange={(e) =>
                                   setSelectInputGroup({
                                     ...selectInputGroup,
                                     dateEnd: e.target.value,
@@ -214,7 +204,7 @@ export const Navigate = () => {
                             <div className="col-12">
                               <div className="">
                                 <button
-                                  className="btn btn-primary btn-sm"
+                                  className="btn btn-primary btn-sm my-2"
                                   onClick={handlerGetStatGroup}
                                 >
                                   Загрузить аналитику
