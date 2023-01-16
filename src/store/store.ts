@@ -20,8 +20,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const persistConfig = {
   key: "myroot",
-  storage: AsyncStorage,
-  blacklist: ["login", "search"],
+  storage: storage,
+  blacklist: ["search"],
 };
 
 const reducers = combineReducers({
