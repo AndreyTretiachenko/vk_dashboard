@@ -7,28 +7,43 @@ interface ItemProps {
   reference?: number;
   endpoint: string;
   fixed: number;
+  titleTop?: string;
 }
 
-function ItemKpi({name, value, reference, endpoint, fixed}: ItemProps) {
+function ItemKpi({
+  name,
+  value,
+  reference,
+  endpoint,
+  fixed,
+  titleTop,
+}: ItemProps) {
   const loading = useAppSelector(state => state.stats.isLoading);
   const errorStats = useAppSelector(state => state.stats.error);
 
   return (
     <>
-      <div className="card-body">
+      <div
+        className="card-body btn m-0"
+        data-toggle="tooltip"
+        data-placement="top"
+        title={titleTop}
+      >
         <h5 className="card-title">{name}</h5>
 
         {!loading ? (
           <>
-            <h3 className="card-text d-inline" style={{wordWrap: "normal"}}>
+            <h4 className="card-text d-inline" style={{wordWrap: "normal"}}>
               {!errorStats ? (
                 <>
-                  {value?.toFixed(fixed) ?? "-"} {endpoint}
+                  {value?.toFixed(fixed) ?? "-"}
+                  {endpoint}
                 </>
               ) : (
                 <div style={{fontSize: 16}}>нет доступа</div>
               )}
-            </h3>
+            </h4>
+
             <div className="d-inline-flex align-items-center">
               {reference !== undefined &&
                 !errorStats &&

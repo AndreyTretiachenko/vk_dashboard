@@ -19,7 +19,7 @@ export const Charts = () => {
     <>
       <div className="card text-center mt-2">
         <div className="card-header">Просмотры постов по дням</div>
-        <div className="card-body p-0 m-0">
+        <div className="card-body p-0 mr-3 mt-3 pt-1">
           <ResponsiveContainer width="100%" height={250}>
             <AreaChart
               width={800}
@@ -71,7 +71,7 @@ export const Charts = () => {
         <div className="card-header">
           Реакции (лайки, репосты, комментарии) по дням
         </div>
-        <div className="card-body p-0">
+        <div className="card-body p-0 pt-1 mr-3 mt-3">
           <ResponsiveContainer width="100%" height={250}>
             <LineChart
               width={800}
