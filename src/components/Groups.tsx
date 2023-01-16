@@ -27,9 +27,12 @@ function Groups() {
       <Navigate />
       <Analytic />
       {!response.isLoading && response.error === "" ? (
-        <>{/* <TopRecords /> */}</>
+        <>
+          {/* <TopRecords /> */}
+          <Charts />
+        </>
       ) : (
-        <>{/* <Charts /> */}</>
+        <></>
       )}
     </>
   );
