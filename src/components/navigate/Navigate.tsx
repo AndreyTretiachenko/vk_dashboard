@@ -1,35 +1,35 @@
-import {useEffect, useState} from "react";
-import {groupIDs} from "../../data/groupsIDs";
-import {findGroup} from "../../features/findDroupByIdSlice";
-import {getLogin} from "../../features/loginSlice";
-import {getStats} from "../../features/statSlice";
-import {useAppDispatch, useAppSelector} from "../../hooks/hookStore";
-import {TselectInputGroup} from "../../models/stats";
+import { useEffect, useState } from "react";
+import { groupIDs } from "../../data/groupsIDs";
+import { findGroup } from "../../features/findDroupByIdSlice";
+import { getLogin } from "../../features/loginSlice";
+import { getStats } from "../../features/statSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hookStore";
+import { TselectInputGroup } from "../../models/stats";
 import FindGroupsByID from "../findGroup/FindGroupsByID";
 
 export const Navigate = () => {
   const dispatch = useAppDispatch();
-  const {data} = useAppSelector(state => state.login);
+  const { data } = useAppSelector((state) => state.login);
   const [inputGroup, setinputGroup] = useState<TselectInputGroup[]>([]);
   const [selectInputGroup, setSelectInputGroup] = useState({
     ...groupIDs[0],
     dateEnd: new Date(Date.now()).toLocaleDateString("en-CA"),
     dateStart: new Date(Date.now()).toLocaleDateString("en-CA"),
   } as TselectInputGroup);
-  const findListGroup = useAppSelector(state => state.search);
+  const findListGroup = useAppSelector((state) => state.search);
   const [favourite, setFavourite] = useState(false);
-  const favouriteList = useAppSelector(state => state.favourite.items);
+  const favouriteList = useAppSelector((state) => state.favourite.items);
 
   const handlerOAuthVK = () => {
     dispatch(getLogin());
   };
 
   const handlePressFind = (query: string) => {
-    dispatch(findGroup({q: query, offset: 0, count: 20}));
+    dispatch(findGroup({ q: query, offset: 0, count: 20 }));
   };
 
   const handlerAddGroup = (select: TselectInputGroup) => {
-    setinputGroup(prev => [select, ...prev]);
+    setinputGroup((prev) => [select, ...prev]);
   };
 
   const handlerGetStatGroup = () => {
@@ -48,7 +48,7 @@ export const Navigate = () => {
     if (favourite) setinputGroup(favouriteList);
     else
       setinputGroup(
-        groupIDs.sort(({name: a}, {name: b}) => a.localeCompare(b))
+        groupIDs.sort(({ name: a }, { name: b }) => a.localeCompare(b))
       );
   }, [favourite, favouriteList]);
 
@@ -59,7 +59,7 @@ export const Navigate = () => {
           <img
             alt="0_0"
             src={data.photo}
-            style={{border: "1px solid", borderRadius: "100px"}}
+            style={{ border: "1px solid", borderRadius: "100px" }}
           />
           {data.id ? (
             <>
@@ -97,7 +97,7 @@ export const Navigate = () => {
                     <div className="col">
                       <div className="row">
                         <div
-                          className="col-12 col-md-6 col-lg-6 p-0"
+                          className="col-12 col-md-6 col-lg-6 p-0 pr-2"
                           // style={{border: "1px solid"}}
                         >
                           <div className="row">
@@ -105,7 +105,7 @@ export const Navigate = () => {
                               <div className="input-group">
                                 <select
                                   name="selectGroup"
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     setSelectInputGroup({
                                       id: Number(e.target.value),
                                       name: e.target.options[
@@ -123,7 +123,7 @@ export const Navigate = () => {
                                   className="form-control form-control-sm"
                                   aria-describedby="basic-addon3"
                                 >
-                                  {inputGroup.map(item => (
+                                  {inputGroup.map((item) => (
                                     <option
                                       key={item.id}
                                       value={item.id}
@@ -145,7 +145,7 @@ export const Navigate = () => {
                                     type="checkbox"
                                     id="exampleCheck1"
                                     checked={favourite}
-                                    onChange={e =>
+                                    onChange={(e) =>
                                       setFavourite(e.target.checked)
                                     }
                                   />
@@ -175,13 +175,13 @@ export const Navigate = () => {
                             <div className="col-12 my-1 d-flex p-0">
                               <input
                                 className="form-control form-control-sm d-inline"
-                                style={{width: "auto"}}
+                                style={{ width: "auto" }}
                                 type="date"
                                 value={selectInputGroup.dateStart}
                                 defaultValue={new Date(
                                   Date.now()
                                 ).toLocaleDateString("en-CA")}
-                                onChange={e =>
+                                onChange={(e) =>
                                   setSelectInputGroup({
                                     ...selectInputGroup,
                                     dateStart: e.target.value,
@@ -193,13 +193,13 @@ export const Navigate = () => {
                               </span>
                               <input
                                 className="form-control form-control-sm d-inline"
-                                style={{width: "auto"}}
+                                style={{ width: "auto" }}
                                 type="date"
                                 value={selectInputGroup.dateEnd}
                                 defaultValue={new Date(
                                   Date.now()
                                 ).toLocaleDateString("en-CA")}
-                                onChange={e =>
+                                onChange={(e) =>
                                   setSelectInputGroup({
                                     ...selectInputGroup,
                                     dateEnd: e.target.value,
