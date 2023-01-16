@@ -13,6 +13,7 @@ function Groups() {
   useEffect(() => {
     dispatch(getStatus())
       .then((res: any) => {
+        console.log(res);
         dispatch(getDataUser()).then(res => {
           dispatch(updateData(res.payload[0]));
         });
