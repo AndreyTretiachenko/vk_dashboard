@@ -46,9 +46,9 @@ export default function FindGroupsByID(props: propsFind) {
 
   return (
     <>
-      <div className="ml-0 d-inline">
+      <div className="ml-0 d-inline ">
         <button
-          className="btn btn-sm btn-primary"
+          className="btn btn-sm btn-primary mb-1"
           data-toggle="modal"
           data-target="#AddGroupModal"
         >

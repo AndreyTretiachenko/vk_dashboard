@@ -54,17 +54,19 @@ export const Navigate = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="mx-2 my-2">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex align-items-sm-center">
+        <div className="mx-1 my-1 d-flex w-20">
           <img
-            alt=""
+            alt="0_0"
             src={data.photo}
             style={{border: "1px solid", borderRadius: "100px"}}
           />
           {data.id ? (
-            <span className="m-2 h6">
-              {data.first_name} {data.last_name}
-            </span>
+            <>
+              <span className="m-2 h6">
+                {data.first_name} {data.last_name}
+              </span>
+            </>
           ) : (
             <button
               className="btn btn-sm btn-primary m-2"
@@ -95,13 +97,14 @@ export const Navigate = () => {
                     <div className="col">
                       <div className="row">
                         <div
-                          className="col-12 col-md-6 col-lg-6"
+                          className="col-12 col-md-6 col-lg-6 p-0"
                           // style={{border: "1px solid"}}
                         >
                           <div className="row">
                             <div className="col-12 my-1">
                               <div className="input-group">
                                 <select
+                                  name="selectGroup"
                                   onChange={e => {
                                     setSelectInputGroup({
                                       id: Number(e.target.value),
@@ -165,11 +168,11 @@ export const Navigate = () => {
                           </div>
                         </div>
                         <div
-                          className="col-12 col-md-6 col-lg-6 "
+                          className="col-12 col-md-6 col-lg-6"
                           // style={{border: "1px solid"}}
                         >
                           <div className="row">
-                            <div className="col-12 my-1 d-flex">
+                            <div className="col-12 my-1 d-flex p-0">
                               <input
                                 className="form-control form-control-sm d-inline"
                                 style={{width: "auto"}}
@@ -204,7 +207,7 @@ export const Navigate = () => {
                                 }
                               />
                             </div>
-                            <div className="col-12">
+                            <div className="col-12 p-0">
                               <div className="">
                                 <button
                                   className="btn btn-primary btn-sm my-2"

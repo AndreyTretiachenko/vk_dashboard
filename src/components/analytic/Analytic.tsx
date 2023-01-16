@@ -35,7 +35,7 @@ export const Analytic = () => {
           <div className="card">
             <div className="card-header">
               <div className="row">
-                <div className="col-12 col-sm-6 col-md-6">
+                <div className="col-12 col-sm-6 col-md-6 mb-1 mt-1">
                   аналитика: &nbsp;
                   <span style={{fontWeight: 500}}>
                     {response.isLoading
@@ -43,7 +43,7 @@ export const Analytic = () => {
                       : response.groups[0]?.name}
                   </span>
                 </div>
-                <div className="col-12 col-sm-6 col-md-6 d-flex justify-content-end">
+                <div className="col-12 col-sm-6 col-md-6 d-flex mt-1 mb-1 justify-content-sm-end">
                   {response.count > 0 && (
                     <>
                       <FafouriteButton
@@ -63,7 +63,7 @@ export const Analytic = () => {
                   </h6>
 
                   <div
-                    className="card d-inline-flex mr-1"
+                    className="card d-inline-flex m-1"
                     style={{width: "10rem"}}
                   >
                     <ItemKpi
