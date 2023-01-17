@@ -44,6 +44,8 @@ export const getStats = createAsyncThunk(
         count: 0,
         items: [],
         groups: [],
+        dateStart: 0,
+        dateEnd: 0,
       };
       let settingsReq = await request(settings).then((res: any) => {
         return {
@@ -66,7 +68,12 @@ export const getStats = createAsyncThunk(
           Number(settings.dateStart.split("-")[2])
         ).getTime() / 1000;
 
-      statsAll = { ...statsAll, groups: settingsReq.groups };
+      statsAll = {
+        ...statsAll,
+        groups: settingsReq.groups,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
+      };
       let i = 0;
       let exitFlag = false;
       while (i <= settingsReq.countOffset && exitFlag === false) {
@@ -107,6 +114,8 @@ export const getStats = createAsyncThunk(
 
 const initialState: TstatsGroup = {
   count: 0,
+  start: 0,
+  end: 0,
   items: [],
   error: "",
   isLoading: false,
@@ -133,6 +142,8 @@ export const statSlice = createSlice({
         state.items = action.payload.items;
         state.count = action.payload.count ?? action.payload.count;
         state.groups = action.payload.groups;
+        state.start = action.payload.dateStart;
+        state.end = action.payload.dateEnd;
         state.error = "";
         let like = 0;
         action.payload.items.map((item: any) => {

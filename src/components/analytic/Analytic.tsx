@@ -158,7 +158,7 @@ export const Analytic = () => {
                       value={response.items.length}
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Количество постов в группе"
                     />
                   </div>
                   <div
@@ -170,7 +170,7 @@ export const Analytic = () => {
                       value={response.result.likes}
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Количество лайков на постах"
                     />
                   </div>
                   <div
@@ -182,7 +182,7 @@ export const Analytic = () => {
                       value={response.result.comments}
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Количество комментариев на постах"
                     />
                   </div>
                   <div
@@ -194,7 +194,7 @@ export const Analytic = () => {
                       value={response.result.reposts}
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Количество репостов на постах"
                     />
                   </div>
                   <div
@@ -206,7 +206,7 @@ export const Analytic = () => {
                       value={response.groups[0]?.members_count}
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Подписчики группы (не зависит от периода)"
                     />
                   </div>
                   <div
@@ -239,7 +239,7 @@ export const Analytic = () => {
                       value={response.result.views}
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Количество показов на постах"
                     />
                   </div>
                   <div
@@ -255,7 +255,7 @@ export const Analytic = () => {
                       }
                       endpoint={""}
                       fixed={0}
-                      titleTop=""
+                      titleTop="Просмотры к постам - сколько на 1 пост приходится просмотров"
                     />
                   </div>
                 </div>

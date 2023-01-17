@@ -62,7 +62,7 @@ export interface link {
   url: string;
   description: string;
   title: string;
-  photo:Photo;
+  photo: Photo;
 }
 
 export interface market {
@@ -137,6 +137,8 @@ export interface Group {
 
 export interface TstatsGroup {
   count: number;
+  start: number;
+  end: number;
   items: Item[];
   error: string;
   isLoading: boolean;
