@@ -3,18 +3,18 @@ import {
   addFavouriteItem,
   updateFavouriteList,
 } from "../../features/favouriteSlice";
-import {useAppDispatch, useAppSelector} from "../../hooks/hookStore";
-import {FafouriteButton} from "../favouriteButton/FafouriteButton";
+import { useAppDispatch, useAppSelector } from "../../hooks/hookStore";
+import { FafouriteButton } from "../favouriteButton/FafouriteButton";
 import ItemKpi from "../kpi/itemKpi";
 
 export const Analytic = () => {
   const dispatch = useAppDispatch();
-  const response = useAppSelector(state => state.stats);
-  const favouriteList = useAppSelector(state => state.favourite.items);
+  const response = useAppSelector((state) => state.stats);
+  const favouriteList = useAppSelector((state) => state.favourite.items);
 
   const handlerToggleFavourite = () => {
     const find = favouriteList.find(
-      items => items.id === response.groups[0]?.id
+      (items) => items.id === response.groups[0]?.id
     )?.name;
     if (find === undefined) {
       dispatch(
@@ -31,13 +31,13 @@ export const Analytic = () => {
   return (
     <>
       <div className="container-fluid p-0">
-        <div style={{display: "inline-block", width: "100%"}}>
+        <div style={{ display: "inline-block", width: "100%" }}>
           <div className="card">
             <div className="card-header">
               <div className="row">
                 <div className="col-12 col-sm-6 col-md-6 mb-1 mt-1">
                   аналитика: &nbsp;
-                  <span style={{fontWeight: 500}}>
+                  <span style={{ fontWeight: 500 }}>
                     {response.isLoading
                       ? "загрузка ....."
                       : response.groups[0]?.name}
@@ -64,17 +64,19 @@ export const Analytic = () => {
 
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"ERpost"}
                       value={
-                        ((response.result.comments +
-                          response.result.likes +
-                          response.result.reposts) /
-                          response.groups[0]?.members_count /
-                          response.items.length) *
-                        100
+                        response.items.length > 0
+                          ? ((response.result.comments +
+                              response.result.likes +
+                              response.result.reposts) /
+                              response.groups[0]?.members_count /
+                              response.items.length) *
+                            100
+                          : 0
                       }
                       endpoint={"%"}
                       reference={2}
@@ -85,16 +87,18 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"ERview"}
                       value={
-                        ((response.result.comments +
-                          response.result.likes +
-                          response.result.reposts) /
-                          response.result.views) *
-                        100
+                        response.result.views > 0
+                          ? ((response.result.comments +
+                              response.result.likes +
+                              response.result.reposts) /
+                              response.result.views) *
+                            100
+                          : 0
                       }
                       endpoint={"%"}
                       reference={1}
@@ -105,15 +109,17 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"LR"}
                       value={
-                        (response.result.likes /
-                          response.groups[0]?.members_count /
-                          response.items.length) *
-                        100
+                        response.items.length > 0
+                          ? (response.result.likes /
+                              response.groups[0]?.members_count /
+                              response.items.length) *
+                            100
+                          : 0
                       }
                       endpoint={"%"}
                       reference={1}
@@ -124,15 +130,17 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"TR"}
                       value={
-                        (response.result.comments /
-                          response.groups[0]?.members_count /
-                          response.items.length) *
-                        100
+                        response.items.length > 0
+                          ? (response.result.comments /
+                              response.groups[0]?.members_count /
+                              response.items.length) *
+                            100
+                          : 0
                       }
                       endpoint={"%"}
                       reference={1}
@@ -143,7 +151,7 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Posts"}
@@ -155,7 +163,7 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Likes"}
@@ -167,7 +175,7 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Comments"}
@@ -179,7 +187,7 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Reposts"}
@@ -191,7 +199,7 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Members"}
@@ -203,15 +211,17 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"CTR"}
                       value={
-                        (response.result.views /
-                          response.groups[0]?.members_count /
-                          response.items.length) *
-                        100
+                        response.items.length > 0
+                          ? (response.result.views /
+                              response.groups[0]?.members_count /
+                              response.items.length) *
+                            100
+                          : 0
                       }
                       endpoint={"%"}
                       reference={10}
@@ -222,7 +232,7 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Views"}
@@ -234,11 +244,15 @@ export const Analytic = () => {
                   </div>
                   <div
                     className="card d-inline-flex m-1"
-                    style={{width: "10rem"}}
+                    style={{ width: "10rem" }}
                   >
                     <ItemKpi
                       name={"Views/Posts"}
-                      value={response.result.views / response.items.length}
+                      value={
+                        response.items.length > 0
+                          ? response.result.views / response.items.length
+                          : 0
+                      }
                       endpoint={""}
                       fixed={0}
                       titleTop=""

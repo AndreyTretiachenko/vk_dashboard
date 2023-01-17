@@ -11,10 +11,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {useAppSelector} from "../../hooks/hookStore";
+import { useAppSelector } from "../../hooks/hookStore";
 
 export const Charts = () => {
-  const response = useAppSelector(state => state.stats);
+  const response = useAppSelector((state) => state.stats);
   return (
     <>
       <div className="card text-center mt-2">
@@ -25,7 +25,7 @@ export const Charts = () => {
               width={800}
               height={500}
               data={response.items
-                .map(item => {
+                .map((item) => {
                   return {
                     дата: new Intl.DateTimeFormat("ru", {
                       day: "2-digit",
@@ -43,15 +43,22 @@ export const Charts = () => {
                 bottom: 5,
               }}
             >
-              <CartesianGrid strokeDasharray="6 6" />
+              {/* <CartesianGrid strokeDasharray="6 6" /> */}
               <defs>
                 <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="50%" stopColor="#8884d8" stopOpacity={0.8} />
                   <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="дата" />
-              <YAxis />
+              <XAxis
+                dataKey="дата"
+                style={{ fontSize: "0.85rem" }}
+                padding={{ right: 10, left: 20 }}
+              />
+              <YAxis
+                style={{ fontSize: "0.85rem" }}
+                padding={{ top: 10, bottom: 20 }}
+              />
               <Tooltip />
 
               {/* <Legend /> */}
@@ -77,7 +84,7 @@ export const Charts = () => {
               width={800}
               height={500}
               data={response.items
-                .map(item => {
+                .map((item) => {
                   return {
                     дата: new Intl.DateTimeFormat("ru", {
                       day: "2-digit",
@@ -98,15 +105,22 @@ export const Charts = () => {
                 bottom: 5,
               }}
             >
-              <CartesianGrid strokeDasharray="6 6" />
+              {/* <CartesianGrid strokeDasharray="3 3" /> */}
               <defs>
                 <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="50%" stopColor="#8884d8" stopOpacity={0.8} />
                   <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="дата" />
-              <YAxis />
+              <XAxis
+                dataKey="дата"
+                style={{ fontSize: "0.85rem" }}
+                padding={{ right: 10, left: 20 }}
+              />
+              <YAxis
+                style={{ fontSize: "0.85rem" }}
+                padding={{ top: 10, bottom: 20 }}
+              />
               <Tooltip />
 
               {/* <Legend /> */}
