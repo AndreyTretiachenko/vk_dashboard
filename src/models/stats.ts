@@ -136,9 +136,10 @@ export interface Group {
 }
 
 export interface TstatsGroup {
+  test:number;
   count: number;
-  start: number;
-  end: number;
+  start?: number;
+  end?: number;
   items: Item[];
   error: string;
   isLoading: boolean;
