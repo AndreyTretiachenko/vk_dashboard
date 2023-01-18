@@ -114,7 +114,6 @@ export const getStats = createAsyncThunk(
 
 const initialState: TstatsGroup = {
   count: 0,
-  test:0,
   start: 0,
   end: 0,
   items: [],
