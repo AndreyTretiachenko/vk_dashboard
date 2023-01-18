@@ -16,13 +16,13 @@ import favouriteSlice from "../features/favouriteSlice";
 import storage from "redux-persist/lib/storage";
 import findDroupByIdSlice from "../features/findDroupByIdSlice";
 import parseSlice from "../features/parseSlice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const persistConfig = {
   key: "myroot",
   version: 1.1,
   storage: storage,
   blacklist: [ "search", "stats"],
+  
 };
 
 const reducers = combineReducers({
