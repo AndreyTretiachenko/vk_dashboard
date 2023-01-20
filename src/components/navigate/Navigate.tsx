@@ -58,13 +58,13 @@ export const Navigate = () => {
         <div className="mx-1 my-1 d-flex w-20">
           <img
             alt="0_0"
-            src={data.photo}
+            src={data?.photo}
             style={{ border: "1px solid", borderRadius: "100px" }}
           />
           {data.id ? (
             <>
               <span className="m-2 h6">
-                {data.first_name} {data.last_name}
+                {data?.first_name} {data?.last_name}
               </span>
             </>
           ) : (

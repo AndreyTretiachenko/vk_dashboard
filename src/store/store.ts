@@ -19,10 +19,9 @@ import parseSlice from "../features/parseSlice";
 
 const persistConfig = {
   key: "myroot",
-  version: 1.1,
+  version: 1.2,
   storage: storage,
-  blacklist: [ "search", "stats"],
-  
+  blacklist: ["search", "stats"],
 };
 
 const reducers = combineReducers({
