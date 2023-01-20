@@ -111,7 +111,7 @@ export const parseSlice = createSlice({
   reducers: {
     addGroup: (state:any, action) => {
       return {...state,
-        groups: [...state.groups, action.payload]
+        groups: [action.payload, ...state.groups]
       }
     },
     removeGroup: (state:any, action) => {
