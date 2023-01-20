@@ -24,15 +24,15 @@ export const ParseMember = () => {
 
   const exportNewUser = (newUser, fileName) => {
     console.log(newUser.toString());
-    const fileData = newUser
-      .map(item => {
-        return item.replaceAll(",", "") + "\n";
+    const fileData = [...newUser]
+      .map((item: any) => {
+        console.log(item);
+        if (item) return item.toString().replace(/,/g, "") + "\n";
       })
-      .toString()
-      .replaceAll(",", "");
+      .toString();
 
     console.log(fileData);
-    const blob = new Blob([fileData], {
+    const blob = new Blob([fileData.replaceAll(",", "")], {
       type: "text/plain",
     });
     const url = URL.createObjectURL(blob);
@@ -175,8 +175,8 @@ export const ParseMember = () => {
                 let list = [];
                 listGroup.map((item: any) => {
                   if (item.newMembers) {
-                    list = [...list, ...item?.newMembers];
-                    list.map(item => item.replace(",", ""));
+                    list.push(...item.newMembers);
+                    // list.map(item => item.replace(",", ""));
                   }
                 });
                 exportNewUser(list, "all");
