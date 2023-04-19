@@ -56,7 +56,7 @@ export const Navigate = () => {
           <img alt="0_0" src={data?.photo} style={{ border: "1px solid", borderRadius: "100px" }} />
           {data.id ? (
             <>
-              <a href="/callback-vk" className="btn bnt-text p-0">
+              <a href="/callback-vk" className="btn bnt-text p-0 pt-2">
                 <span className="m-2 h6">
                   {data?.first_name} {data?.last_name}
                 </span>
