@@ -48,7 +48,7 @@ export const Analytic = () => {
             <div className="card-body d-flex justify-content-center">
               <div className="row">
                 <div className="col-12 p-1">
-                  <h6 className="card-title">Показатели эффективности группы</h6>
+                  <h6 className="card-title mx-2">Показатели эффективности группы</h6>
 
                   <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
