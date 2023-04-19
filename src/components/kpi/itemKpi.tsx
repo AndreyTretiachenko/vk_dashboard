@@ -16,7 +16,7 @@ function ItemKpi({ name, value, reference, endpoint, fixed, titleTop }: ItemProp
 
   return (
     <>
-      <div className="card-body btn m-0 pt-3 pb-3" data-toggle="tooltip" data-placement="top" title={titleTop}>
+      <div className="card-body btn m-0 p-0 pt-3 pb-3" data-toggle="tooltip" data-placement="top" title={titleTop}>
         <h5 className="card-title">{name}</h5>
 
         {!loading ? (
