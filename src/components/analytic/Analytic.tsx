@@ -50,7 +50,7 @@ export const Analytic = () => {
                 <div className="col-12 p-1">
                   <h6 className="card-title">Показатели эффективности группы</h6>
 
-                  <div className="card d-inline-flex m-1" style={{ width: "11rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "11.5rem" }}>
                     <ItemKpi
                       name={"ERpost"}
                       value={
@@ -68,7 +68,7 @@ export const Analytic = () => {
                       Референс - от 2% хороший реультат"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "11.5rem" }}>
                     <ItemKpi
                       name={"ERview"}
                       value={
