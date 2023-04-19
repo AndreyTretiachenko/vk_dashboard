@@ -50,7 +50,7 @@ export const Analytic = () => {
                 <div className="col-12 p-1">
                   <h6 className="card-title">Показатели эффективности группы</h6>
 
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"ERpost"}
                       value={
@@ -68,7 +68,7 @@ export const Analytic = () => {
                       Референс - от 2% хороший реультат"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"ERview"}
                       value={
@@ -85,7 +85,7 @@ export const Analytic = () => {
                       публикации. Референс - от 1% хороший реультат"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"LR"}
                       value={
@@ -100,7 +100,7 @@ export const Analytic = () => {
                       подписчиков. Референс - от 1% хороший реультат"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"TR"}
                       value={
@@ -115,7 +115,7 @@ export const Analytic = () => {
                       публикации/кол-во подписчиков."
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Posts"}
                       value={response.items.length}
@@ -124,7 +124,7 @@ export const Analytic = () => {
                       titleTop="Количество постов в группе"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Likes"}
                       value={response.result.likes}
@@ -133,7 +133,7 @@ export const Analytic = () => {
                       titleTop="Количество лайков на постах"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Comments"}
                       value={response.result.comments}
@@ -142,7 +142,7 @@ export const Analytic = () => {
                       titleTop="Количество комментариев на постах"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Reposts"}
                       value={response.result.reposts}
@@ -151,7 +151,7 @@ export const Analytic = () => {
                       titleTop="Количество репостов на постах"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Members"}
                       value={response.groups[0]?.members_count}
@@ -160,7 +160,7 @@ export const Analytic = () => {
                       titleTop="Подписчики группы (не зависит от периода)"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"CTR"}
                       value={
@@ -175,7 +175,7 @@ export const Analytic = () => {
                       хороший реультат"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Views"}
                       value={response.result.views}
@@ -184,7 +184,7 @@ export const Analytic = () => {
                       titleTop="Количество показов на постах"
                     />
                   </div>
-                  <div className="card d-inline-flex m-1" style={{ width: "11.6rem" }}>
+                  <div className="card d-inline-flex m-1" style={{ width: "12rem" }}>
                     <ItemKpi
                       name={"Views/Posts"}
                       value={response.items.length > 0 ? response.result.views / response.items.length : 0}
